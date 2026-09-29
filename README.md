@@ -1,5 +1,7 @@
 # Robot de Sumo Autónomo — Programación
 
+Programa de prototipado de un robot de sumo autónomo con 2 alas de servos.
+
 Control de un robot de sumo autónomo para Arduino (placa XMotion/Genesis de
 JSumo, estilo Leonardo/Nano) con estrategia de combate, alas de engaño y
 simulación 2D para desarrollo sin el robot físico.

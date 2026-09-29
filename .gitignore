@@ -1,0 +1,5 @@
+simulacion/resultados/
+simulacion/.venv/
+simulacion/__pycache__/
+*.pyc
+tools/test_estrategia

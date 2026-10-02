@@ -7,15 +7,7 @@ IMPORTANTE: si cambias la lógica en estrategia.cpp, cámbiala aquí también
 from constantes import CONST
 
 # Estados (igual que el enum EstadoRobot de estrategia.h)
-EST_ESPERA, EST_BUSCAR, EST_ATAQUE, EST_BORDE = 0, 1, 2, 3
-
-# Patrones de alas (igual que el enum PatronAlas de tipos.h)
-ALA_QUIETAS, ALA_RECOGIDAS, ALA_EXTENDIDAS, ALA_ONDEO = 0, 1, 2, 3
-
-# Mismos valores que PATRON_ALAS_* en config.h (sincronizar a mano)
-PATRON_ALAS_ATAQUE = ALA_EXTENDIDAS
-PATRON_ALAS_BUSQUEDA = ALA_ONDEO
-PATRON_ALAS_BORDE = ALA_QUIETAS
+EST_BUSCAR, EST_ATAQUE, EST_BORDE = 0, 1, 2
 
 
 class Lectura:
@@ -27,16 +19,14 @@ class Lectura:
 
 
 class Comando:
-    __slots__ = ("motorIzq", "motorDer", "patronAlas")
+    __slots__ = ("motorIzq", "motorDer")
 
-    def __init__(self, motorIzq=0, motorDer=0, patronAlas=ALA_QUIETAS):
+    def __init__(self, motorIzq=0, motorDer=0):
         self.motorIzq = motorIzq
         self.motorDer = motorDer
-        self.patronAlas = patronAlas
 
     def __repr__(self):
-        return (f"Comando(izq={self.motorIzq}, der={self.motorDer}, "
-                f"alas={self.patronAlas})")
+        return f"Comando(izq={self.motorIzq}, der={self.motorDer})"
 
 
 # ---- ayudas de sensores (igual que en estrategia.cpp) ----
@@ -55,14 +45,14 @@ def rival_detectado(s):
 
 
 class Estrategia:
-    """Máquina de estados: ESPERA -> BUSCAR/ATAQUE/BORDE."""
+    """Máquina de estados: BUSCAR / ATAQUE / BORDE."""
 
     def __init__(self):
         self.reiniciar()
 
     def reiniciar(self):
-        self.estado = EST_ESPERA
-        self.estadoAnterior = EST_ESPERA
+        self.estado = EST_BUSCAR
+        self.estadoAnterior = EST_BUSCAR
         self.faseBorde = 0
         self.tFase = 0
         self.tUltimoRival = 0
@@ -71,14 +61,6 @@ class Estrategia:
 
     def actualizar(self, s, t):
         c = Comando()
-
-        # ---------- ESPERA ----------
-        if self.estado == EST_ESPERA:
-            c.patronAlas = ALA_RECOGIDAS
-            if t < CONST["TIEMPO_ESPERA_INICIAL"]:
-                self.estadoAnterior = self.estado
-                return c
-            self.estado = EST_BUSCAR
 
         # ---------- BORDE (no se interrumpe) ----------
         if self.estado == EST_BORDE:
@@ -109,7 +91,6 @@ class Estrategia:
             self.tFase = t
             c.motorIzq = -CONST["VEL_RETROCESO"]
             c.motorDer = -CONST["VEL_RETROCESO"]
-            c.patronAlas = PATRON_ALAS_BORDE
             self.estadoAnterior = self.estado
             return c
 
@@ -117,7 +98,6 @@ class Estrategia:
         if rival_detectado(s):
             self.estado = EST_ATAQUE
             self.tUltimoRival = t
-            c.patronAlas = PATRON_ALAS_ATAQUE
 
             izq = s.em3[0] or s.em3[1]
             der = s.em3[2] or s.em3[3]
@@ -138,7 +118,6 @@ class Estrategia:
 
         # ---------- PRIORIDAD 3: buscar ----------
         self.estado = EST_BUSCAR
-        c.patronAlas = PATRON_ALAS_BUSQUEDA
 
         if t - self.tUltimoRival < CONST["TIEMPO_MEMORIA_LADO"]:
             if self.rivalPorIzq:

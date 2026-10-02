@@ -2,8 +2,8 @@
 EXACTAMENTE los mismos valores que el código del robot.
 
 Cada vez que cambies config.h, la simulación se actualiza sola.
-Solo se sincronizan los valores numéricos; los patrones de alas
-(PATRON_ALAS_*) se repiten a mano en estrategia.py (ver comentario allí).
+Solo se sincronizan los valores numéricos (velocidades, tiempos, umbrales
+y ángulos de las alas).
 """
 import os
 import re
@@ -17,11 +17,9 @@ INTERES = [
     "PWM_MAX",
     "VEL_BUSQUEDA", "VEL_ATAQUE", "VEL_ARCO_LENTO", "VEL_ARCO_RAPIDO",
     "VEL_GIRO_BORDE", "VEL_RETROCESO",
-    "TIEMPO_ESPERA_INICIAL", "TIEMPO_RETROCESO", "TIEMPO_GIRO_BORDE",
-    "TIEMPO_MEMORIA_LADO",
+    "TIEMPO_RETROCESO", "TIEMPO_GIRO_BORDE", "TIEMPO_MEMORIA_LADO",
     "UMBRAL_QTR", "QTR_BORDE_ES_BLANCO",
-    "ANGULO_ALA_RECOGIDA", "ANGULO_ALA_EXTENDIDA",
-    "AMPLITUD_ONDEO", "PERIODO_ONDEO_MS",
+    "ANGULO_ALA_RECOGIDA", "ANGULO_ALA_DESPLIEGUE",
 ]
 
 _PATRON = re.compile(r"^#define\s+(\w+)\s+(\S+)")

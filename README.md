@@ -20,7 +20,7 @@ simulación 2D para desarrollo sin el robot físico.
 | 2 motores Core 750 RPM (6 V) | Tracción diferencial | PWM + dirección |
 | 4 sensores EM-3 (E-Robots) | Detectar al rival (frente) | Digital (1 = rival) |
 | 2 sensores Mini QTR (E-Robots) | Detectar el borde del dohyo | Analógico (0–1023) |
-| 2 servos MOT-110 (Steren) | Alas/señuelo | PWM de servo |
+| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | PWM de servo |
 | Batería LiPo 6S 22,2 V 850 mAh | Alimentación | ⚠️ ver abajo |
 
 ## ⚠️ Alimentación (importante)
@@ -59,12 +59,14 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
 1. **BORDE** (máxima prioridad): si un QTR ve la línea blanca → retrocede
    180 ms y gira 420 ms hacia adentro (el lado se alterna).
 2. **ATAQUE**: si un EM-3 ve al rival → gira avanzando en arco hacia ese
-   lado; si lo tiene de frente, empuja a `VEL_ATAQUE` con las alas
-   extendidas.
+   lado; si lo tiene de frente, empuja a `VEL_ATAQUE`.
 3. **BUSCAR**: si no hay nadie → gira en el sitio en un solo sentido (barre
    los 360° del dohyo) y recuerda el último lado donde vio al rival durante
    800 ms.
-4. **ESPERA**: 5 s de cuenta regresiva tras la señal de arranque.
+
+Las **alas** (90° de recorrido) solo engañan a los sensores del rival: se
+recogen al inicio (posición de medida) y se despliegan una sola vez al
+arrancar el combate.
 
 Los tiempos y velocidades se ajustan en `config.h` sin tocar la lógica.
 

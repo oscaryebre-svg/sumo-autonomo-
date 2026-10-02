@@ -49,17 +49,16 @@ instalar, subir el código, calibrar y **documentar los resultados**.
 El robot imprime una línea cada 0,1 s:
 
 ```
-12.3s est=2 qtr=340,355 em3=0100 mot=70,70 alas=2
+12.3s est=1 qtr=340,355 em3=0100 mot=70,70
 ```
 
 | Campo | Significado |
 |---|---|
 | `12.3s` | Segundos desde el arranque del combate |
-| `est=` | Estado: **0** espera · **1** buscando · **2** atacando · **3** escapando del borde |
+| `est=` | Estado: **0** buscando · **1** atacando · **2** escapando del borde |
 | `qtr=` | Lectura de los 2 sensores de piso (bajo = negro, alto = blanco) |
 | `em3=` | Los 4 sensores de oponente (0 = nada, 1 = rival detectado) |
 | `mot=` | Velocidad pedida a cada motor (positivo = adelante) |
-| `alas=` | Patrón de las alas (2 = extendidas, 3 = ondeando) |
 
 > Si el robot **no se mueve nunca** y no tienes **módulo de arranque**,
 > es normal: está esperando la señal. Anótalo en el reporte y el
@@ -104,12 +103,14 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 
 ### Test 04 — Alas (servos) (`tests/04_test_alas`)
 
-Las dos alas se mueven juntas de 0° a 180° y de vuelta, imprimiendo el ángulo.
+Las dos alas se mueven juntas de **0° a 90°** y de vuelta, imprimiendo el
+ángulo. Las alas solo sirven para engañar a los sensores del rival, no
+tienen más movimientos.
 
 **Pasos:**
-1. Observa el barrido y anota el **ángulo mínimo y máximo** que cada ala
-   puede alcanzar **sin forzar** (cuando empieza a traquetear o chocar).
-2. ¿El ala derecha se mueve "espejada" (al revés que la izquierda)?
+1. Observa el barrido: ¿completan los 0° a 90° sin forzar?
+2. Si alguna se atasca o choca con el chasis, anota en qué ángulo.
+3. ¿El ala derecha se mueve "espejada" (al revés que la izquierda)?
 
 ## 5. Formulario de reporte (cópialo y rellénalo)
 
@@ -138,15 +139,15 @@ TEST 03 — MINI QTR
 - Sobre blanco: izq = ____   der = ____
 - Altura del sensor al piso (mm): ____
 
-TEST 04 — ALAS
-- Ángulo mínimo sin forzar:  izq = ____   der = ____
-- Ángulo máximo sin forzar:  izq = ____   der = ____
+TEST 04 — ALAS (recorrido de 0° a 90°)
+- ¿Completan los 90° sin forzar? ( ) sí  ( ) no
+- Si se atasca: ala izq en ____° · ala der en ____°
 - ¿Derecha espejada? ( ) sí  ( ) no
 
 PROGRAMA PRINCIPAL (con Serial Monitor abierto)
 - Pega 15-20 líneas del Serial en cada situación:
-  a) esperando     b) buscando     c) frente al rival     d) en el borde
-- ¿Ondea las alas al buscar? ( ) sí  ( ) no
+  a) al arrancar    b) buscando     c) frente al rival     d) en el borde
+- ¿Se despliegan las alas al arrancar el combate? ( ) sí  ( ) no
 - ¿Empuja al rival de frente? ( ) sí  ( ) no
 - ¿Retrocede y gira al pisar la línea blanca? ( ) sí  ( ) no
 - ¿Se sale del dohyo en algún momento? ( ) sí  ( ) no

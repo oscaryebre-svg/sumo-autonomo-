@@ -38,6 +38,7 @@ python correr.py listar                   # escenarios disponibles
 python correr.py rival_frente             # un escenario (CSV + gráfica)
 python correr.py torneo --n 30            # torneo aleatorio
 python correr.py todo                     # todos los escenarios
+python correr.py todo --sin-graficas      # igual pero sin PNG (solo CSV)
 ```
 
 Genera `simulacion/resultados/*.csv` (traza completa) y `*.png`
@@ -65,7 +66,7 @@ pines directo.
    - Motores al revés → `DIR_ADELANTE_IZQ` / `DIR_ADELANTE_DER`
    - Orden de los EM-3 → comentarios y orden de `PIN_EM3_*`
    - Umbral QTR → `UMBRAL_QTR = (negro + blanco) / 2`
-   - Ángulos de las alas → `ANGULO_ALA_RECOGIDA` / `ANGULO_ALA_EXTENDIDA`
+   - Ángulos de las alas → `ANGULO_ALA_RECOGIDA` / `ANGULO_ALA_DESPLIEGUE`
    - Sin módulo de arranque → `START_ACTIVO_BAJO 0`
    - Buck de 12 V → `PWM_MAX 255`; 6S directa → `PWM_MAX 70`
 3. Se recompila, se sube a la rama y el tester repite la prueba.

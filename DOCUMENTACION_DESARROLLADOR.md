@@ -56,17 +56,20 @@ arduino-cli compile --fqbn arduino:avr:nano SumoAutonomo/
 ```
 
 Con Arduino IDE 2.x: abrir `SumoAutonomo/SumoAutonomo.ino`, elegir placa y
-compilar. No hace falta instalar la librería XMotion: el código maneja los
-pines directo.
+compilar. No hace falta instalar ninguna librería: los motores, los sensores
+y los servos se manejan con pines directos (los servos en D4/D2 generan sus
+pulsos por software, así que tampoco se usa la librería Servo).
 
 ## 4. Flujo de trabajo con el tester
 
 1. El tester sigue `TUTORIAL_TESTER.md` y entrega el formulario relleno.
 2. Con esos datos se ajusta SOLO `SumoAutonomo/src/config.h`:
    - Motores al revés → `DIR_ADELANTE_IZQ` / `DIR_ADELANTE_DER`
-   - Orden de los EM-3 → comentarios y orden de `PIN_EM3_*`
+   - Nombres de los EM-3 → `PIN_EM3_ALA_IZQ`, `PIN_EM3_CENTRAL_IZQ`,
+     `PIN_EM3_CENTRAL_DER`, `PIN_EM3_ALA_DER`
    - Umbral QTR → `UMBRAL_QTR = (negro + blanco) / 2`
    - Ángulos de las alas → `ANGULO_ALA_RECOGIDA` / `ANGULO_ALA_DESPLIEGUE`
+   - Alas espejadas → `ALA_DER_INVERTIDA`
    - Sin módulo de arranque → `START_ACTIVO_BAJO 0`
    - Buck de 12 V → `PWM_MAX 255`; 6S directa → `PWM_MAX 70`
 3. Se recompila, se sube a la rama y el tester repite la prueba.
@@ -100,7 +103,8 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 
 ## 7. Pendientes de datos reales
 
-- Pines de los servos (propuestos D9/D10; confirmar PWM libres en la placa).
 - Umbral QTR real y alturas de montaje (test 03).
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
+- Confirmar en el test 04 que ambas alas recorren 0°–90° y si la derecha
+  va espejada (`ALA_DER_INVERTIDA`).

@@ -21,14 +21,17 @@
 #define PIN_QTR_DER   A2
 
 // --- EM-3: sensores de oponente (DIGITALES, 1 = rival detectado) ---
-#define PIN_EM3_1   A4
-#define PIN_EM3_2   A5
-#define PIN_EM3_3   1       // D1 (es TX del Serial1: no usar Serial1 en el código)
-#define PIN_EM3_4   0       // D0 (es RX del Serial1)
+// Nombres según el chasis: "ala" = sensor del extremo, "central" = junto al centro.
+#define PIN_EM3_ALA_IZQ      A4   // sensor de ala izquierda
+#define PIN_EM3_CENTRAL_IZQ  A5   // sensor central izquierdo
+#define PIN_EM3_CENTRAL_DER  1    // D1, central derecho (es TX del Serial1: no usar Serial1)
+#define PIN_EM3_ALA_DER      0    // D0, ala derecha (es RX del Serial1)
 
-// --- Servos de las alas (MOT-110). Confirmar pines PWM libres con la placa ---
-#define PIN_ALA_IZQ   9
-#define PIN_ALA_DER   10
+// --- Servos de las alas (MOT-110) ---
+// D2 y D4 NO son pines de temporizador: los pulsos se generan por software
+// en alas.cpp, así que NO se usa la librería Servo y no hay que instalar nada.
+#define PIN_ALA_DER   2     // D2 = servo derecho
+#define PIN_ALA_IZQ   4     // D4 = servo izquierdo
 
 // --- Módulo de arranque (opcional) ---
 #define PIN_START         8
@@ -70,9 +73,11 @@
 // ===================== ALAS (90° de recorrido) =====================
 // Las alas SOLO engañan a los sensores del rival: se recogen al inicio
 // (posición de medida) y se despliegan al arrancar el combate.
+// Los pulsos se generan por software (alas.cpp), sin librería Servo.
 #define ANGULO_ALA_RECOGIDA    0     // alas pegadas al cuerpo
 #define ANGULO_ALA_DESPLIEGUE  90    // alas extendidas (máximo recorrido)
 #define ALA_DER_INVERTIDA      0     // 1 = el servo derecho va "espejado"
+#define PERIODO_TRAMA_US       20000 // 20 ms entre tramas de pulso (50 Hz)
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

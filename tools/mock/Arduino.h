@@ -27,7 +27,10 @@ inline int digitalRead(uint8_t) { return 0; }
 inline void analogWrite(uint8_t, int) {}
 inline int analogRead(uint8_t) { return 0; }
 inline unsigned long millis() { return 0; }
+// micros() avanza para que la máquina de pulsos del servo progrese
+inline unsigned long micros() { static unsigned long t = 0; t += 4000; return t; }
 inline void delay(unsigned long) {}
+inline void delayMicroseconds(unsigned int) {}
 
 // ---- Serial mínimo (solo para poder compilar el .ino en PC) ----
 class PrintMock {

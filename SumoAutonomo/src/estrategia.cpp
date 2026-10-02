@@ -23,8 +23,8 @@ static bool rival_detectado(const LecturaSensores_t &s) {
 // ====================== estado interno ======================
 // (variables estáticas: se conservan entre llamadas)
 
-static uint8_t  estado         = EST_ESPERA;
-static uint8_t  estadoAnterior = EST_ESPERA;
+static uint8_t  estado         = EST_BUSCAR;
+static uint8_t  estadoAnterior = EST_BUSCAR;
 static uint8_t  faseBorde      = 0;     // 0 = retroceso, 1 = giro
 static uint32_t tFase          = 0;     // inicio de la fase actual
 static uint32_t tUltimoRival   = 0;     // última vez que se vio al rival
@@ -32,8 +32,8 @@ static bool     rivalPorIzq    = true;  // último lado donde se vio al rival
 static bool     girarIzq       = true;  // sentido del giro de búsqueda
 
 void estrategia_reiniciar() {
-  estado = EST_ESPERA;
-  estadoAnterior = EST_ESPERA;
+  estado = EST_BUSCAR;
+  estadoAnterior = EST_BUSCAR;
   faseBorde = 0;
   tFase = 0;
   tUltimoRival = 0;
@@ -49,17 +49,6 @@ Comando_t estrategia_actualizar(const LecturaSensores_t &s, uint32_t t) {
   Comando_t c;
   c.motorIzq = 0;
   c.motorDer = 0;
-  c.patronAlas = ALA_QUIETAS;
-
-  // ---------- ESPERA: cuenta regresiva tras el arranque ----------
-  if (estado == EST_ESPERA) {
-    c.patronAlas = ALA_RECOGIDAS;
-    if (t < TIEMPO_ESPERA_INICIAL) {
-      estadoAnterior = estado;
-      return c;                              // quieto hasta que pasen 5 s
-    }
-    estado = EST_BUSCAR;
-  }
 
   // ---------- BORDE: maniobra de escape, NO se interrumpe ----------
   if (estado == EST_BORDE) {
@@ -95,7 +84,6 @@ Comando_t estrategia_actualizar(const LecturaSensores_t &s, uint32_t t) {
     tFase = t;
     c.motorIzq = -VEL_RETROCESO;
     c.motorDer = -VEL_RETROCESO;
-    c.patronAlas = PATRON_ALAS_BORDE;
     estadoAnterior = estado;
     return c;
   }
@@ -104,7 +92,6 @@ Comando_t estrategia_actualizar(const LecturaSensores_t &s, uint32_t t) {
   if (rival_detectado(s)) {
     estado = EST_ATAQUE;
     tUltimoRival = t;
-    c.patronAlas = PATRON_ALAS_ATAQUE;
 
     bool izq = s.em3[0] || s.em3[1];   // sensores del lado izquierdo
     bool der = s.em3[2] || s.em3[3];   // sensores del lado derecho
@@ -127,7 +114,6 @@ Comando_t estrategia_actualizar(const LecturaSensores_t &s, uint32_t t) {
 
   // ---------- PRIORIDAD 3: buscar ----------
   estado = EST_BUSCAR;
-  c.patronAlas = PATRON_ALAS_BUSQUEDA;
 
   // Memoria: si el rival se perdió hace poco, seguir girando a ese lado.
   if (t - tUltimoRival < TIEMPO_MEMORIA_LADO) {

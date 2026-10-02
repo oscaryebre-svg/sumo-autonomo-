@@ -63,23 +63,16 @@
 #define VEL_RETROCESO     55         // retroceso al ver el borde
 
 // Tiempos en milisegundos
-#define TIEMPO_ESPERA_INICIAL  5000  // cuenta regresiva tras el arranque
 #define TIEMPO_RETROCESO       180   // retroceder al ver el borde
 #define TIEMPO_GIRO_BORDE      420   // girar tras el retroceso
 #define TIEMPO_MEMORIA_LADO    800   // seguir girando hacia el último lado visto
 
-// ===================== ALAS =====================
-// Ángulos de los servos (0..180). Se ajustan en tests/04.
-#define ANGULO_ALA_RECOGIDA    40
-#define ANGULO_ALA_EXTENDIDA   140
-#define AMPLITUD_ONDEO         30    // cuánto se mueven las alas al ondear
-#define PERIODO_ONDEO_MS       250   // duración de una oscilación
-#define ALA_DER_INVERTIDA      1     // 1 = el servo derecho va "espejado"
-
-// Patrón de alas en cada situación (valores de PatronAlas, ver tipos.h)
-#define PATRON_ALAS_ATAQUE    ALA_EXTENDIDAS
-#define PATRON_ALAS_BUSQUEDA  ALA_ONDEO
-#define PATRON_ALAS_BORDE     ALA_QUIETAS
+// ===================== ALAS (90° de recorrido) =====================
+// Las alas SOLO engañan a los sensores del rival: se recogen al inicio
+// (posición de medida) y se despliegan al arrancar el combate.
+#define ANGULO_ALA_RECOGIDA    0     // alas pegadas al cuerpo
+#define ANGULO_ALA_DESPLIEGUE  90    // alas extendidas (máximo recorrido)
+#define ALA_DER_INVERTIDA      0     // 1 = el servo derecho va "espejado"
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

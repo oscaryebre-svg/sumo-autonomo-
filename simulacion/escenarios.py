@@ -51,7 +51,7 @@ ESCENARIOS = {
         "rival": ((0.0, 10.0), conducta_quieto),
     },
     "rival_lateral": {
-        "descripcion": "Rival a la izquierda: debe girar fino y atacar",
+        "descripcion": "Rival a la izquierda: debe girar en arco y atacar",
         "robot": (0.0, -10.0, math.pi / 2),
         "rival": ((-15.0, 8.0), conducta_quieto),
     },

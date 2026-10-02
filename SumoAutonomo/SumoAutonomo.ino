@@ -1,8 +1,8 @@
 // ============================================================
 //  SUMO AUTÓNOMO — programa principal
 //
-//  Flujo: leer sensores -> pedir decisión a la estrategia
-//         -> aplicar motores y alas -> (depuración por Serial)
+//  Flujo: esperar arranque -> desplegar alas -> leer sensores
+//         -> pedir decisión a la estrategia -> aplicar motores
 //
 //  TODOS los ajustes están en src/config.h
 // ============================================================
@@ -12,7 +12,8 @@
 #include "alas.h"
 #include "estrategia.h"
 
-static uint32_t tArranque = 0;   // millis() del arranque del combate
+static uint32_t tArranque = 0;        // millis() del arranque del combate
+static bool alasDesplegadas = false;  // las alas se despliegan una sola vez
 
 // ¿El módulo de arranque ya dio la señal?
 static bool arrancado() {
@@ -29,7 +30,7 @@ void setup() {
   }
   motores_init();
   sensores_init();
-  alas_init();
+  alas_init();                        // alas recogidas (posición de medida)
   pinMode(PIN_START, INPUT_PULLUP);
   estrategia_reiniciar();
 }
@@ -44,13 +45,18 @@ void loop() {
     return;
   }
 
+  // Al iniciar el combate: desplegar las alas para engañar al rival.
+  if (!alasDesplegadas) {
+    alas_desplegar();
+    alasDesplegadas = true;
+  }
+
   LecturaSensores_t s;
   sensores_leer(s);
 
   Comando_t c = estrategia_actualizar(s, t - tArranque);
 
   motores_set(c.motorIzq, c.motorDer);
-  alas_actualizar(c.patronAlas, t);
 
   // Depuración: 10 líneas por segundo con todo lo que "ve" el robot.
   if (DEBUG_SERIAL) {
@@ -69,9 +75,7 @@ void loop() {
       Serial.print(F(" mot="));
       Serial.print(c.motorIzq);
       Serial.print(F(","));
-      Serial.print(c.motorDer);
-      Serial.print(F(" alas="));
-      Serial.println(c.patronAlas);
+      Serial.println(c.motorDer);
     }
   }
 }

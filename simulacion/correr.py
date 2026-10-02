@@ -30,7 +30,7 @@ RESULTADOS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultado
 
 ENCABEZADO = ["t", "estado", "qtr_izq", "qtr_der",
               "em3_1", "em3_2", "em3_3", "em3_4",
-              "motor_izq", "motor_der", "alas",
+              "motor_izq", "motor_der",
               "robot_x", "robot_y", "rival_x", "rival_y"]
 
 
@@ -55,8 +55,8 @@ def simular(esc, nombre, graficar=True):
         s = leer_sensores(robot, rival)
         c = estrat.actualizar(s, tms)
         robot.actualizar(c.motorIzq, c.motorDer, DT)
-        if rival and tms >= CONST["TIEMPO_ESPERA_INICIAL"]:
-            rival.mover(robot, t, DT)      # el rival también espera el arranque
+        if rival:
+            rival.mover(robot, t, DT)      # ambos arrancan a la vez
         resolver_empuje(robot, rival, DT)
 
         if estrat.estado == EST_BORDE and t - t_ultimo_borde > 1.0:
@@ -65,7 +65,7 @@ def simular(esc, nombre, graficar=True):
 
         filas.append([t, estrat.estado, s.qtr[0], s.qtr[1],
                       s.em3[0], s.em3[1], s.em3[2], s.em3[3],
-                      c.motorIzq, c.motorDer, c.patronAlas,
+                      c.motorIzq, c.motorDer,
                       robot.x, robot.y,
                       rival.x if rival else -999.0, rival.y if rival else -999.0])
 
@@ -109,11 +109,11 @@ def grafica(filas, nombre, descripcion, resultado, duracion):
                              facecolor="white", edgecolor="black", linewidth=2))
     ax1.add_patch(plt.Circle((0, 0), RADIO_NEGRO, facecolor="#222222"))
 
-    xs = [f[11] for f in filas]
-    ys = [f[12] for f in filas]
+    xs = [f[10] for f in filas]
+    ys = [f[11] for f in filas]
     ax1.plot(xs, ys, color="red", lw=1.5, label="robot")
-    xr = [f[13] for f in filas if f[13] != -999.0]
-    yr = [f[14] for f in filas if f[13] != -999.0]
+    xr = [f[12] for f in filas if f[12] != -999.0]
+    yr = [f[13] for f in filas if f[12] != -999.0]
     if xr:
         ax1.plot(xr, yr, color="blue", lw=1.5, label="rival")
     ax1.plot(xs[0], ys[0], "o", color="red", ms=4)
@@ -126,8 +126,8 @@ def grafica(filas, nombre, descripcion, resultado, duracion):
     ts = [f[0] for f in filas]
     es = [f[1] for f in filas]
     ax2.plot(ts, es, drawstyle="steps-post")
-    ax2.set_yticks([0, 1, 2, 3])
-    ax2.set_yticklabels(["ESPERA", "BUSCAR", "ATAQUE", "BORDE"])
+    ax2.set_yticks([0, 1, 2])
+    ax2.set_yticklabels(["BUSCAR", "ATAQUE", "BORDE"])
     ax2.set_xlabel("tiempo (s)")
     ax2.set_ylabel("estado")
 

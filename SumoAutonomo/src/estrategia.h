@@ -15,13 +15,12 @@
 
 // Estados del robot (también para la depuración por Serial)
 enum EstadoRobot : uint8_t {
-  EST_ESPERA = 0,   // cuenta regresiva de 5 s
-  EST_BUSCAR = 1,   // girar buscando al rival
-  EST_ATAQUE = 2,   // rival a la vista: apuntar y empujar
-  EST_BORDE  = 3    // maniobra de escape del borde
+  EST_BUSCAR = 0,   // girar buscando al rival
+  EST_ATAQUE = 1,   // rival a la vista: apuntar y empujar
+  EST_BORDE  = 2    // maniobra de escape del borde
 };
 
-// Vuelve al inicio (espera de 5 s). Llamar en setup.
+// Vuelve al estado inicial (buscar). Llamar en setup.
 void estrategia_reiniciar();
 
 // Estado actual (para imprimirlo por Serial)

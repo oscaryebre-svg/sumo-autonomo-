@@ -81,16 +81,19 @@ El Serial dice qué paso toca en cada momento.
 
 ### Test 02 — Sensores EM-3 (`tests/02_test_em3`)
 
-Imprime 4 columnas `[EM3_1 EM3_2 EM3_3 EM3_4]` (1 = detecta).
+Imprime 4 columnas `[ala_izq central_izq central_der ala_der]` (1 = detecta).
 Cada sensor tiene un **LED azul** que se enciende al detectar.
 
 **Pasos:**
-1. Mirando el robot de frente, localiza los 4 sensores de izquierda a derecha.
-2. Pasa la mano a ~20 cm delante de cada sensor, uno por uno, y mira
-   **qué columna** se pone en 1.
-3. Aléjate despacio y anota a qué distancia deja de detectarte.
+1. Pasa la mano a ~20 cm delante de cada sensor, uno por uno, y comprueba
+   que se enciende **su** columna:
+   - sensor de ala izquierda (A4) → primera columna
+   - sensor central izquierdo (A5) → segunda columna
+   - sensor central derecho (D1) → tercera columna
+   - sensor de ala derecha (D0) → cuarta columna
+2. Aléjate despacio y anota a qué distancia deja de detectarte.
 
-**Anota:** qué sensor físico es cada columna (de izq. a der.) y el alcance.
+**Anota:** que cada sensor responde en su columna y el alcance aproximado.
 
 ### Test 03 — Sensores de piso Mini QTR (`tests/03_test_qtr`)
 
@@ -105,7 +108,9 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 
 Las dos alas se mueven juntas de **0° a 90°** y de vuelta, imprimiendo el
 ángulo. Las alas solo sirven para engañar a los sensores del rival, no
-tienen más movimientos.
+tienen más movimientos. Están en los pines **D4 (izquierda)** y **D2
+(derecha)**; el test genera los pulsos por software, así que no hay que
+instalar ninguna librería.
 
 **Pasos:**
 1. Observa el barrido: ¿completan los 0° a 90° sin forzar?
@@ -127,12 +132,12 @@ TEST 01 — MOTORES
 - Giros correctos: ( ) sí  ( ) no
 - Observaciones: ______________
 
-TEST 02 — EM-3 (mirando el robot de frente, de izq. a der.)
-- EM3_1 = ______________
-- EM3_2 = ______________
-- EM3_3 = ______________
-- EM3_4 = ______________
-- Alcance aproximado (cm): ______________
+TEST 02 — EM-3 (¿responde cada sensor en su columna?)
+- Ala izquierda (A4):     ( ) sí  ( ) no
+- Central izquierdo (A5): ( ) sí  ( ) no
+- Central derecho (D1):   ( ) sí  ( ) no
+- Ala derecha (D0):       ( ) sí  ( ) no
+- Alcance aproximado (cm): ____
 
 TEST 03 — MINI QTR
 - Sobre negro:  izq = ____   der = ____

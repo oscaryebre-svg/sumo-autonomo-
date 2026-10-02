@@ -44,12 +44,12 @@ simulación 2D para desarrollo sin el robot físico.
 | Motor derecho DIR | D13 | |
 | QTR izquierdo (piso) | A1 | analógico |
 | QTR derecho (piso) | A2 | analógico |
-| EM-3 1 | A4 | orden físico por confirmar (test 02) |
-| EM-3 2 | A5 | |
-| EM-3 3 | D1 | ⚠️ D0/D1 son el Serial1: no usar Serial1 en el código |
-| EM-3 4 | D0 | |
-| Ala izquierda (servo) | D9 | confirmar pines PWM libres en la placa |
-| Ala derecha (servo) | D10 | |
+| EM-3 ala izquierda | A4 | sensor del extremo izquierdo |
+| EM-3 central izquierdo | A5 | |
+| EM-3 central derecho | D1 | ⚠️ D0/D1 son el Serial1: no usar Serial1 en el código |
+| EM-3 ala derecha | D0 | sensor del extremo derecho |
+| Servo ala izquierda | D4 | pulsos por software (sin librería Servo) |
+| Servo ala derecha | D2 | pulsos por software (sin librería Servo) |
 | Módulo de arranque | D8 | `INPUT_PULLUP`, opcional |
 
 ## Cómo funciona la estrategia
@@ -66,7 +66,8 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
 
 Las **alas** (90° de recorrido) solo engañan a los sensores del rival: se
 recogen al inicio (posición de medida) y se despliegan una sola vez al
-arrancar el combate.
+arrancar el combate. Sus pines (D4 y D2) no son de temporizador, así que
+los pulsos se generan por software: no hace falta la librería Servo.
 
 Los tiempos y velocidades se ajustan en `config.h` sin tocar la lógica.
 
@@ -93,6 +94,6 @@ sumo autonomo/
 | El robot avanza girando | Un motor va al revés | Cambiar `DIR_ADELANTE_IZQ`/`DIR_ADELANTE_DER` en config.h |
 | Gira al lado contrario en el borde | Igual | Ídem |
 | No detecta la línea blanca | `UMBRAL_QTR` mal calibrado | Recalibrar con test 03 |
-| Los servos tiemblan o los motores zumban raro | Conflicto de timers con Servo en esa placa | Probar servos en D5/D9 (ver `PIN_ALA_*`) |
+| Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2, pulsos por software) |
 | No arranca nunca | Módulo de arranque ausente | Poner `START_ACTIVO_BAJO 0` en config.h |
 | Se calientan los motores | PWM muy alto con 6S directa | Bajar `PWM_MAX` o usar buck de 12 V |

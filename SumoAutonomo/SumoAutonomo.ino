@@ -38,6 +38,9 @@ void setup() {
 void loop() {
   uint32_t t = millis();
 
+  // Mantener la señal de los servos (pulsos por software).
+  alas_actualizar();
+
   // Esperar la señal de arranque (módulo MicroStart o similar).
   if (!arrancado()) {
     motores_frenar();

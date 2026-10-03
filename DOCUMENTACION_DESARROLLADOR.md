@@ -18,8 +18,8 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . \
 ./test_estrategia          # debe terminar con "RESULTADO: TODAS OK"
 ```
 
-También mide los pulsos que se envían a los servos (ancho y periodo de
-trama), con un reloj controlable:
+También comprueba los ángulos que se escriben en cada servo y que el
+recorrido de cada ala es de 90°:
 
 ```bash
 cd "tools"
@@ -66,9 +66,9 @@ arduino-cli compile --fqbn arduino:avr:nano SumoAutonomo/
 ```
 
 Con Arduino IDE 2.x: abrir `SumoAutonomo/SumoAutonomo.ino`, elegir placa y
-compilar. No hace falta instalar ninguna librería: los motores, los sensores
-y los servos se manejan con pines directos (los servos en D4/D2 generan sus
-pulsos por software, así que tampoco se usa la librería Servo).
+compilar. La única librería que se usa es **Servo** (viene incluida en el
+IDE): motores y sensores se manejan con pines directos, y las alas con la
+librería Servo en D4/D2.
 
 ## 4. Flujo de trabajo con el tester
 
@@ -78,8 +78,8 @@ pulsos por software, así que tampoco se usa la librería Servo).
    - Nombres de los EM-3 → `PIN_EM3_ALA_IZQ`, `PIN_EM3_CENTRAL_IZQ`,
      `PIN_EM3_CENTRAL_DER`, `PIN_EM3_ALA_DER`
    - Umbral QTR → `UMBRAL_QTR = (negro + blanco) / 2`
-   - Pulsos de las alas → `PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE`
-   - Alas espejadas → `ALA_DER_INVERTIDA`
+   - Ángulos de las alas → `ANGULO_IZQ_RECOGIDA`, `ANGULO_IZQ_DESPLIEGUE`,
+     `ANGULO_DER_RECOGIDA`, `ANGULO_DER_DESPLIEGUE`
    - Duración del round → `TIEMPO_COMBATE_MS`
    - Sin módulo de arranque → `START_ACTIVO_BAJO 0`
    - Buck de 12 V → `PWM_MAX 255`; 6S directa → `PWM_MAX 70`
@@ -117,7 +117,6 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 - Umbral QTR real y alturas de montaje (test 03).
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
-- Ajustar con el test 04 los pulsos de los topes reales de cada ala
-  (`PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE`) y `ALA_DER_INVERTIDA`.
-  El MOT-110 es analógico de 180°: los pulsos válidos van de 600 a 2400 µs
-  y el test barre 700–2300 µs para medir los topes.
+- Ajustar con el test 04 los cuatro ángulos de las alas
+  (`ANGULO_IZQ_RECOGIDA/DESPLIEGUE`, `ANGULO_DER_RECOGIDA/DESPLIEGUE`),
+  manteniendo 90° de recorrido en cada una.

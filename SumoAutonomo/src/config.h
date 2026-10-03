@@ -28,8 +28,7 @@
 #define PIN_EM3_ALA_DER      0    // D0, ala derecha (es RX del Serial1)
 
 // --- Servos de las alas (MOT-110) ---
-// D2 y D4 NO son pines de temporizador: los pulsos se generan por software
-// en alas.cpp, así que NO se usa la librería Servo y no hay que instalar nada.
+// Se controlan con la librería Servo (incluida en el IDE de Arduino).
 #define PIN_ALA_DER   2     // D2 = servo derecho
 #define PIN_ALA_IZQ   4     // D4 = servo izquierdo
 
@@ -74,19 +73,20 @@
 #define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
 
 // ===================== ALAS (90° de recorrido) =====================
-// Servo MOT-110 (Steren): analógico, 180° de giro, alimentación 3,5-6 V
-// y 40 mA de trabajo (se puede alimentar de la placa). Al ser analógico
-// hay que enviarle pulsos SIEMPRE (50 Hz) para que mantenga la posición:
-// de eso se encarga alas.cpp.
+// Servo MOT-110 (Steren): analógico, 180°, 3,5-6 V, 40 mA. Se controlan
+// con la librería Servo (viene incluida en el IDE): ella genera los pulsos
+// por temporizador, así que el bucle no tiene que mantenerlos y el ala se
+// mueve a la máxima velocidad del servo (< 0,1 s para 90°).
 //
-// Las alas solo tienen dos posiciones y sus pulsos dependen del montaje
-// mecánico: se calibran con el test 04 (anotar el µs de cada tope).
-#define PULSO_ALA_RECOGIDA     1000   // µs: alas pegadas al cuerpo
-#define PULSO_ALA_DESPLIEGUE   1500   // µs: alas extendidas (90°)
-#define ALA_DER_INVERTIDA      0      // 1 = el servo derecho va "espejado"
-#define PERIODO_TRAMA_US       20000  // 20 ms entre tramas (50 Hz, estándar analógico)
-#define PULSO_MINIMO_US        600    // límite de seguridad del servo
-#define PULSO_MAXIMO_US        2400   // límite de seguridad del servo
+// Cada ala tiene DOS posiciones y sus propios ángulos (van montadas
+// espejadas): recogida (inicio/medida y final del round) y desplegada
+// (combate, para engañar a los sensores). Entre ambas hay 90° de recorrido.
+// Los valores de recogida vienen del código que ya funciona; se ajustan
+// con el test 04.
+#define ANGULO_IZQ_RECOGIDA     120   // ala izquierda pegada al cuerpo
+#define ANGULO_IZQ_DESPLIEGUE    30   // 120 - 90 = 30
+#define ANGULO_DER_RECOGIDA      75   // ala derecha pegada al cuerpo
+#define ANGULO_DER_DESPLIEGUE   165   // 75 + 90 = 165
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

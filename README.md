@@ -20,7 +20,7 @@ simulación 2D para desarrollo sin el robot físico.
 | 2 motores Core 750 RPM (6 V) | Tracción diferencial | PWM + dirección |
 | 4 sensores EM-3 (E-Robots) | Detectar al rival (frente) | Digital (1 = rival) |
 | 2 sensores Mini QTR (E-Robots) | Detectar el borde del dohyo | Analógico (0–1023) |
-| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | Servo analógico: 3,5–6 V, 40 mA, pulsos de 50 Hz |
+| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | Librería Servo · analógico 3,5–6 V, 40 mA |
 | Batería LiPo 6S 22,2 V 850 mAh | Alimentación | ⚠️ ver abajo |
 
 ## ⚠️ Alimentación (importante)
@@ -48,8 +48,8 @@ simulación 2D para desarrollo sin el robot físico.
 | EM-3 central izquierdo | A5 | |
 | EM-3 central derecho | D1 | ⚠️ D0/D1 son el Serial1: no usar Serial1 en el código |
 | EM-3 ala derecha | D0 | sensor del extremo derecho |
-| Servo ala izquierda | D4 | pulsos por software (sin librería Servo) |
-| Servo ala derecha | D2 | pulsos por software (sin librería Servo) |
+| Servo ala izquierda | D4 | librería Servo |
+| Servo ala derecha | D2 | librería Servo |
 | Módulo de arranque | D8 | `INPUT_PULLUP`, opcional |
 
 ## Cómo funciona la estrategia
@@ -66,10 +66,10 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
 
 Las **alas** (90° de recorrido) solo engañan a los sensores del rival: se
 recogen al inicio (posición de medida), se despliegan una sola vez al
-arrancar el combate y se recogen al terminar el round. Los 90° se consiguen
-con un pulso de 1000 µs (recogida) a 1500 µs (desplegada). Sus pines (D4 y
-D2) no son de temporizador, así que los pulsos se generan por software: no
-hace falta la librería Servo.
+arrancar el combate y se recogen al terminar el round. Se controlan con la
+librería **Servo** (incluida en el IDE de Arduino) en los pines D4
+(izquierda) y D2 (derecha), con dos ángulos por ala en `config.h`
+separados 90°.
 
 El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
 robot frena y recoge las alas.
@@ -99,7 +99,7 @@ sumo autonomo/
 | El robot avanza girando | Un motor va al revés | Cambiar `DIR_ADELANTE_IZQ`/`DIR_ADELANTE_DER` en config.h |
 | Gira al lado contrario en el borde | Igual | Ídem |
 | No detecta la línea blanca | `UMBRAL_QTR` mal calibrado | Recalibrar con test 03 |
-| Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2, pulsos por software) |
-| Las alas dan tirones o zumban | El pulso de despliegue pasa del límite mecánico | Ajustar `PULSO_ALA_DESPLIEGUE` con el test 04 |
+| Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2) |
+| Las alas fuerzan o zumban en un extremo | Un ángulo de `config.h` pasa del tope mecánico | Ajustar los cuatro `ANGULO_*` con el test 04 |
 | No arranca nunca | Módulo de arranque ausente | Poner `START_ACTIVO_BAJO 0` en config.h |
 | Se calientan los motores | PWM muy alto con 6S directa | Bajar `PWM_MAX` o usar buck de 12 V |

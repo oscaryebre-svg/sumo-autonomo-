@@ -53,9 +53,6 @@ void setup() {
 void loop() {
   uint32_t t = millis();
 
-  // Mantener la señal de los servos (pulsos por software).
-  alas_actualizar();
-
   bool senal = arrancado();
   if (!senal) {
     roundTerminado = false;   // al soltar la señal queda listo para otro round

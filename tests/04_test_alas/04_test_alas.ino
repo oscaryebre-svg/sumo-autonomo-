@@ -1,53 +1,50 @@
 // ============================================================
 //  TEST 04 — ALAS (servos MOT-110 en D4 izquierda y D2 derecha)
 //
-//  El MOT-110 es un servo analógico de 180°: necesita pulsos cada
-//  20 ms y mantiene la posición solo mientras los recibe.
-//
-//  Este test barre TODO el rango útil (700 a 2300 µs) despacio y de
-//  forma continua, imprimiendo el pulso. El ángulo que muestra es
-//  aproximado (convención 1000-2000 µs = 0-180°); lo que manda es el µs.
+//  Mueve cada ala por separado, despacio, de 0° a 180° y de vuelta,
+//  imprimiendo el ángulo. Usa la librería Servo (incluida en el IDE).
 //
 //  Sirve para:
-//   1. Comprobar que el movimiento es suave, sin tirones ni pausas.
-//   2. Anotar el µs en el que el ala está TOTALMENTE RECOGIDA y el µs
-//      en el que está TOTALMENTE DESPLEGADA (sus topes mecánicos).
-//      Si zumba en un extremo, ese µs ya pasa del tope: anótalo y sigue.
-//   3. Ver si el ala derecha va "espejada" (al revés que la izquierda).
+//   1. Ver el recorrido real de cada ala (debe ser suave, sin forzar).
+//   2. Anotar el ángulo RECOGIDA y el ángulo DESPLEGADA de cada ala,
+//      separados por 90° (esos cuatro números van a config.h).
+//   3. Ver si el ala derecha va espejada (al revés que la izquierda).
 // ============================================================
+#include <Servo.h>
+
 #define PIN_ALA_IZQ 4
 #define PIN_ALA_DER 2
 
-#define PULSO_MIN  700    // µs (por debajo del recorrido normal)
-#define PULSO_MAX  2300   // µs (por encima del recorrido normal)
-#define PASO_US     20    // µs que avanza en cada paso (movimiento suave)
+Servo IZservo, Drservo;
 
-void pulso(uint8_t pin, int ancho) {
-  digitalWrite(pin, HIGH);
-  delayMicroseconds(ancho);
-  digitalWrite(pin, LOW);
-}
-
-void mover(int ancho) {
-  pulso(PIN_ALA_IZQ, ancho);          // una trama de 20 ms para cada servo
-  pulso(PIN_ALA_DER, ancho);
-  delay(20);
-  int grados = (ancho - 1000) * 180L / 1000;   // aproximado
-  Serial.print(ancho);
-  Serial.print(F(" us  (~"));
-  Serial.print(grados);
-  Serial.println(F(" grados aprox.)"));
+void barrido(Servo &s, const char *nombre) {
+  for (int a = 0; a <= 180; a += 10) {
+    s.write(a);
+    Serial.print(nombre);
+    Serial.print(F(" = "));
+    Serial.println(a);
+    delay(250);
+  }
+  for (int a = 180; a >= 0; a -= 10) {
+    s.write(a);
+    Serial.print(nombre);
+    Serial.print(F(" = "));
+    Serial.println(a);
+    delay(250);
+  }
 }
 
 void setup() {
-  pinMode(PIN_ALA_IZQ, OUTPUT);
-  pinMode(PIN_ALA_DER, OUTPUT);
+  IZservo.attach(PIN_ALA_IZQ);
+  Drservo.attach(PIN_ALA_DER);
   Serial.begin(115200);
-  Serial.println(F("TEST 04 ALAS (D4 izq, D2 der): barrido suave 700..2300 us"));
-  Serial.println(F("Anota el us del ala RECOGIDA y el del ala DESPLEGADA."));
+  Serial.println(F("TEST 04 ALAS: barrido lento 0..180..0"));
+  Serial.println(F("Anota el angulo RECOGIDA y DESPLEGADA de cada ala (90 entre ellos)."));
 }
 
 void loop() {
-  for (int a = PULSO_MIN; a <= PULSO_MAX; a += PASO_US) mover(a);
-  for (int a = PULSO_MAX; a >= PULSO_MIN; a -= PASO_US) mover(a);
+  Serial.println(F("--- ala IZQUIERDA (D4) ---"));
+  barrido(IZservo, "IZQ");
+  Serial.println(F("--- ala DERECHA (D2) ---"));
+  barrido(Drservo, "DER");
 }

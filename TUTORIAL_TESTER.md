@@ -23,7 +23,8 @@ instalar, subir el código, calibrar y **documentar los resultados**.
      marca *Ejecutable* → doble clic para abrirlo.
 3. Abre el Arduino IDE una vez para que cree sus carpetas.
 
-**No hay que instalar ninguna librería:** el código no las necesita.
+**No hay que instalar nada:** la única librería que se usa (`Servo`) viene
+incluida en el IDE de Arduino.
 
 ## 2. Conectar el robot
 
@@ -106,22 +107,21 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 
 ### Test 04 — Alas (servos MOT-110) (`tests/04_test_alas`)
 
-El servo **MOT-110** es analógico (180°) y necesita pulsos continuos. Este
-test recorre despacio todo el rango (700 a 2300 µs) y el Serial imprime el
-pulso en microsegundos (el ángulo que muestra es aproximado). Están en los
-pines **D4 (izquierda)** y **D2 (derecha)**; los pulsos se generan por
-software, así que no hay que instalar ninguna librería.
+El **MOT-110** es un servo analógico de 180°. Este test mueve **cada ala por
+separado**, despacio, de 0° a 180°, e imprime el ángulo. Están en los pines
+**D4 (izquierda)** y **D2 (derecha)** y usan la librería **Servo**, que ya
+viene incluida en el IDE: no hay que instalar nada.
 
 **Pasos:**
-1. Observa el barrido completo: debe ser **suave, sin tirones ni pausas**.
-2. Anota el **µs en el que el ala está totalmente RECOGIDA** (pegada al
-   cuerpo) y el **µs en el que está totalmente DESPLEGADA** (su tope). Si
-   zumba en un extremo, ese µs ya pasa del tope: anótalo y sigue.
-3. ¿El ala derecha se mueve "espejada" (al revés que la izquierda)?
+1. Observa el barrido de cada ala: debe ser **suave, sin tirones ni pausas**.
+2. Anota el **ángulo en el que el ala está totalmente RECOGIDA** (pegada al
+   cuerpo) y el **ángulo en el que está totalmente DESPLEGADA**. Si fuerza
+   o zumba en un extremo, ese ángulo ya pasa del tope: anótalo.
+3. ¿El ala derecha gira "espejada" (al revés que la izquierda)?
 
-**Anota:** los dos µs de cada ala, si el recorrido es suave y si la derecha
-va espejada. Con eso se ajustan `PULSO_ALA_RECOGIDA` y
-`PULSO_ALA_DESPLIEGUE` en `config.h`.
+**Anota:** los dos ángulos de cada ala (recogida y desplegada), si el
+recorrido es suave y si van espejadas. Con eso se ajustan los cuatro
+`ANGULO_IZQ_*` / `ANGULO_DER_*` en `config.h`.
 
 ## 5. Formulario de reporte (cópialo y rellénalo)
 
@@ -150,11 +150,11 @@ TEST 03 — MINI QTR
 - Sobre blanco: izq = ____   der = ____
 - Altura del sensor al piso (mm): ____
 
-TEST 04 — ALAS (servo MOT-110, barrido de 700 a 2300 µs)
+TEST 04 — ALAS (servo MOT-110, barrido de 0° a 180°)
 - ¿El movimiento es suave (sin tirones ni pausas)? ( ) sí  ( ) no
-- µs con el ala RECOGIDA:   izq ____ µs · der ____ µs
-- µs con el ala DESPLEGADA: izq ____ µs · der ____ µs
-- ¿Zumba en algún extremo? ( ) no ( ) izq en ____ µs ( ) der en ____ µs
+- Ala IZQUIERDA: recogida ____° · desplegada ____°
+- Ala DERECHA:   recogida ____° · desplegada ____°
+- ¿Fuerza o zumba en algún extremo? ( ) no ( ) izq en ____° ( ) der en ____°
 - ¿Derecha espejada? ( ) sí  ( ) no
 
 PROGRAMA PRINCIPAL (con Serial Monitor abierto)
@@ -188,7 +188,7 @@ EXTRA (muy útil)
 | No detecta la línea blanca | Revisa altura del sensor y repite el test 03 |
 | Se sale del dohyo | Repórtalo con el video de la situación |
 | Motores muy lentos o muy agresivos | Repórtalo; se ajusta en `config.h` |
-| Las alas dan tirones o zumban | Repórtalo con el µs donde empieza (test 04); se ajustan los pulsos |
+| Las alas fuerzan o zumban en un extremo | Repórtalo con el ángulo (test 04); se ajustan los cuatro `ANGULO_*` |
 
 **Regla de oro:** si algo se ve raro, **grábalo 10 segundos y pásalo**:
 vale más un video que diez descripciones.

@@ -19,8 +19,8 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock \
 ```
 
 También comprueba los ángulos que se escriben en cada servo, que cada ala
-cambia de posición y que las dos alas van montadas espejadas (el recorrido
-real, ~110° en la izquierda y ~100° en la derecha, se mide con el test 04):
+recorre 90° (izquierda 90°→0°, derecha 90°→180°) y que van montadas
+espejadas:
 
 ```bash
 cd "tools"

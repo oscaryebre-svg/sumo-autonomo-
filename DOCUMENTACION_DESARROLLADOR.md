@@ -18,8 +18,8 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . \
 ./test_estrategia          # debe terminar con "RESULTADO: TODAS OK"
 ```
 
-También comprueba los ángulos que se escriben en cada servo y que el
-recorrido de cada ala es de 90°:
+También comprueba los ángulos que se escriben en cada servo, que las dos
+alas giran en sentidos opuestos y que el recorrido es de al menos 90°:
 
 ```bash
 cd "tools"
@@ -118,5 +118,5 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
 - Ajustar con el test 04 los cuatro ángulos de las alas
-  (`ANGULO_IZQ_RECOGIDA/DESPLIEGUE`, `ANGULO_DER_RECOGIDA/DESPLIEGUE`),
-  manteniendo 90° de recorrido en cada una.
+  (`ANGULO_IZQ_RECOGIDA/DESPLIEGUE`, `ANGULO_DER_RECOGIDA/DESPLIEGUE`) si la
+  mecánica lo pide.

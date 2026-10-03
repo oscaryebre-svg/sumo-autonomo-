@@ -20,7 +20,7 @@ simulación 2D para desarrollo sin el robot físico.
 | 2 motores Core 750 RPM (6 V) | Tracción diferencial | PWM + dirección |
 | 4 sensores EM-3 (E-Robots) | Detectar al rival (frente) | Digital (1 = rival) |
 | 2 sensores Mini QTR (E-Robots) | Detectar el borde del dohyo | Analógico (0–1023) |
-| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | Librería Servo · analógico 3,5–6 V, 40 mA |
+| 2 servos MOT-110 (Steren) | Alas retráctiles (engañan sensores) | Librería Servo · analógico 3,5–6 V, 40 mA |
 | Batería LiPo 6S 22,2 V 850 mAh | Alimentación | ⚠️ ver abajo |
 
 ## ⚠️ Alimentación (importante)
@@ -64,12 +64,11 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
    los 360° del dohyo) y recuerda el último lado donde vio al rival durante
    800 ms.
 
-Las **alas** (90° de recorrido) solo engañan a los sensores del rival: se
-recogen al inicio (posición de medida), se despliegan una sola vez al
-arrancar el combate y se recogen al terminar el round. Se controlan con la
-librería **Servo** (incluida en el IDE de Arduino) en los pines D4
-(izquierda) y D2 (derecha), con dos ángulos por ala en `config.h`
-separados 90°.
+Las **alas** solo engañan a los sensores del rival: se recogen al inicio
+(posición de medida), se despliegan una sola vez al arrancar el combate y
+se recogen al terminar el round. Se controlan con la librería **Servo**
+(incluida en el IDE de Arduino) en los pines D4 (izquierda) y D2 (derecha),
+con dos ángulos por ala en `config.h` (los del código que ya funciona).
 
 El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
 robot frena y recoge las alas.

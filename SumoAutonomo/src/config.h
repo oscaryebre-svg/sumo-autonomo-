@@ -72,21 +72,20 @@
 // Duración del round: al cumplirse, el robot se detiene y recoge las alas.
 #define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
 
-// ===================== ALAS (90° de recorrido) =====================
+// ===================== ALAS (recorrido en config.h) =====================
 // Servo MOT-110 (Steren): analógico, 180°, 3,5-6 V, 40 mA. Se controlan
 // con la librería Servo (viene incluida en el IDE): ella genera los pulsos
 // por temporizador, así que el bucle no tiene que mantenerlos y el ala se
-// mueve a la máxima velocidad del servo (< 0,1 s para 90°).
+// mueve a la máxima velocidad del servo.
 //
 // Cada ala tiene DOS posiciones y sus propios ángulos (van montadas
 // espejadas): recogida (inicio/medida y final del round) y desplegada
-// (combate, para engañar a los sensores). Entre ambas hay 90° de recorrido.
-// Los valores de recogida vienen del código que ya funciona; se ajustan
-// con el test 04.
+// (combate, para engañar a los sensores). Los valores son los del código
+// que YA FUNCIONA en el robot; se ajustan con el test 04 si hace falta.
 #define ANGULO_IZQ_RECOGIDA     120   // ala izquierda pegada al cuerpo
-#define ANGULO_IZQ_DESPLIEGUE    30   // 120 - 90 = 30
+#define ANGULO_IZQ_DESPLIEGUE    10   // ala izquierda extendida
 #define ANGULO_DER_RECOGIDA      75   // ala derecha pegada al cuerpo
-#define ANGULO_DER_DESPLIEGUE   165   // 75 + 90 = 165
+#define ANGULO_DER_DESPLIEGUE   175   // ala derecha extendida
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

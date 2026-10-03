@@ -115,9 +115,8 @@ viene incluida en el IDE: no hay que instalar nada.
 **Pasos:**
 1. Observa el barrido de cada ala: debe ser **suave, sin tirones ni pausas**.
 2. Anota el **ángulo en el que el ala está totalmente RECOGIDA** (pegada al
-   cuerpo) y el **ángulo en el que está totalmente DESPLEGADA**; entre los
-   dos debe haber **90°**. Si fuerza o zumba en un extremo, ese ángulo ya
-   pasa del tope: anótalo.
+   cuerpo) y el **ángulo en el que está totalmente DESPLEGADA**. Si fuerza
+   o zumba en un extremo, ese ángulo ya pasa del tope: anótalo.
 3. ¿El ala derecha gira "espejada" (al revés que la izquierda)?
 
 **Anota:** los dos ángulos de cada ala (recogida y desplegada), si el
@@ -153,8 +152,8 @@ TEST 03 — MINI QTR
 
 TEST 04 — ALAS (servo MOT-110, barrido de 0° a 180°)
 - ¿El movimiento es suave (sin tirones ni pausas)? ( ) sí  ( ) no
-- Ala IZQUIERDA: recogida ____° · desplegada ____° (90° entre ellas)
-- Ala DERECHA:   recogida ____° · desplegada ____° (90° entre ellas)
+- Ala IZQUIERDA: recogida ____° · desplegada ____°
+- Ala DERECHA:   recogida ____° · desplegada ____°
 - ¿Fuerza o zumba en algún extremo? ( ) no ( ) izq en ____° ( ) der en ____°
 - ¿Derecha espejada? ( ) sí  ( ) no
 

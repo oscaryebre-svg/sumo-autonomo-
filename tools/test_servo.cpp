@@ -51,11 +51,15 @@ int main() {
   comprobar("al recoger, la derecha vuelve",
             ultimoAngulo(PIN_ALA_DER) == ANGULO_DER_RECOGIDA);
 
-  // Requisito: 90° de recorrido en cada ala
-  comprobar("el ala izquierda recorre 90 grados",
-            abs(ANGULO_IZQ_RECOGIDA - ANGULO_IZQ_DESPLIEGUE) == 90);
-  comprobar("el ala derecha recorre 90 grados",
-            abs(ANGULO_DER_RECOGIDA - ANGULO_DER_DESPLIEGUE) == 90);
+  // Requisito: cada ala debe recorrer al menos 90° (y dentro del servo)
+  int recorridoIzq = abs(ANGULO_IZQ_RECOGIDA - ANGULO_IZQ_DESPLIEGUE);
+  int recorridoDer = abs(ANGULO_DER_RECOGIDA - ANGULO_DER_DESPLIEGUE);
+  std::printf("  recorrido: izq %d grados, der %d grados\n",
+              recorridoIzq, recorridoDer);
+  comprobar("el ala izquierda recorre entre 90 y 180 grados",
+            recorridoIzq >= 90 && recorridoIzq <= 180);
+  comprobar("el ala derecha recorre entre 90 y 180 grados",
+            recorridoDer >= 90 && recorridoDer <= 180);
 
   // Los dos servos van espejados: al desplegar, giran en sentidos opuestos
   comprobar("las alas van espejadas (giran en sentido opuesto)",

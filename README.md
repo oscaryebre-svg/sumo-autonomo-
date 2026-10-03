@@ -68,7 +68,8 @@ Las **alas** solo engañan a los sensores del rival: se recogen al inicio
 (posición de medida), se despliegan una sola vez al arrancar el combate y
 se recogen al terminar el round. Se controlan con la librería **Servo**
 (incluida en el IDE de Arduino) en los pines D4 (izquierda) y D2 (derecha),
-con dos ángulos por ala en `config.h` (los del código que ya funciona).
+con el movimiento de 0° (recogida) a 90° (desplegada) definido en
+`config.h`.
 
 El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
 robot frena y recoge las alas.

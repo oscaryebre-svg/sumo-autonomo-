@@ -18,8 +18,8 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . \
 ./test_estrategia          # debe terminar con "RESULTADO: TODAS OK"
 ```
 
-También comprueba los ángulos que se escriben en cada servo, que las dos
-alas giran en sentidos opuestos y que el recorrido es de al menos 90°:
+También comprueba los ángulos que se escriben en cada servo y que el
+recorrido de cada ala es de 90° (de 0 a 90):
 
 ```bash
 cd "tools"

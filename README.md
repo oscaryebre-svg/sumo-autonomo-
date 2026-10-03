@@ -65,9 +65,14 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
    800 ms.
 
 Las **alas** (90° de recorrido) solo engañan a los sensores del rival: se
-recogen al inicio (posición de medida) y se despliegan una sola vez al
-arrancar el combate. Sus pines (D4 y D2) no son de temporizador, así que
-los pulsos se generan por software: no hace falta la librería Servo.
+recogen al inicio (posición de medida), se despliegan una sola vez al
+arrancar el combate y se recogen al terminar el round. Los 90° se consiguen
+con un pulso de 1000 µs (recogida) a 1500 µs (desplegada). Sus pines (D4 y
+D2) no son de temporizador, así que los pulsos se generan por software: no
+hace falta la librería Servo.
+
+El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
+robot frena y recoge las alas.
 
 Los tiempos y velocidades se ajustan en `config.h` sin tocar la lógica.
 
@@ -95,5 +100,6 @@ sumo autonomo/
 | Gira al lado contrario en el borde | Igual | Ídem |
 | No detecta la línea blanca | `UMBRAL_QTR` mal calibrado | Recalibrar con test 03 |
 | Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2, pulsos por software) |
+| Las alas dan tirones o zumban | El pulso de despliegue pasa del límite mecánico | Ajustar `PULSO_ALA_DESPLIEGUE` con el test 04 |
 | No arranca nunca | Módulo de arranque ausente | Poner `START_ACTIVO_BAJO 0` en config.h |
 | Se calientan los motores | PWM muy alto con 6S directa | Bajar `PWM_MAX` o usar buck de 12 V |

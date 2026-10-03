@@ -70,14 +70,21 @@
 #define TIEMPO_GIRO_BORDE      420   // girar tras el retroceso
 #define TIEMPO_MEMORIA_LADO    800   // seguir girando hacia el último lado visto
 
+// Duración del round: al cumplirse, el robot se detiene y recoge las alas.
+#define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
+
 // ===================== ALAS (90° de recorrido) =====================
 // Las alas SOLO engañan a los sensores del rival: se recogen al inicio
-// (posición de medida) y se despliegan al arrancar el combate.
-// Los pulsos se generan por software (alas.cpp), sin librería Servo.
-#define ANGULO_ALA_RECOGIDA    0     // alas pegadas al cuerpo
-#define ANGULO_ALA_DESPLIEGUE  90    // alas extendidas (máximo recorrido)
-#define ALA_DER_INVERTIDA      0     // 1 = el servo derecho va "espejado"
-#define PERIODO_TRAMA_US       20000 // 20 ms entre tramas de pulso (50 Hz)
+// (posición de medida), se despliegan al arrancar el combate y se vuelven
+// a recoger cuando el round termina.
+//
+// Un servo estándar recorre 180° con pulsos de 1000 a 2000 µs, así que
+// 90° de recorrido son 500 µs de diferencia. Estos dos valores se ajustan
+// con el test 04 (si el ala se atasca o zumba, el pulso pasa del límite).
+#define PULSO_ALA_RECOGIDA     1000   // µs: alas pegadas al cuerpo
+#define PULSO_ALA_DESPLIEGUE   1500   // µs: alas extendidas (90°)
+#define ALA_DER_INVERTIDA      0      // 1 = el servo derecho va "espejado"
+#define PERIODO_TRAMA_US       20000  // 20 ms entre tramas de pulso (50 Hz)
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

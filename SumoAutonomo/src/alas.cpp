@@ -3,19 +3,24 @@
 // ============================================================
 //  Servo por software (sin librería Servo y sin temporizadores).
 //
-//  Un servo espera un pulso cada 20 ms (50 Hz): 1 ms ≈ 0° y 2 ms ≈ 180°.
-//  Como las alas solo recorren 90°, se usa 1 ms (recogidas) a 2 ms
-//  (desplegadas). La máquina de estados no bloquea el loop.
+//  Un servo espera un pulso cada 20 ms (50 Hz). El ancho del pulso
+//  marca la posición: la recogida y la desplegada se configuran en
+//  config.h en microsegundos (PULSO_ALA_RECOGIDA / PULSO_ALA_DESPLIEGUE).
+//
+//  Las alas solo tienen dos posiciones y la máquina de estados no
+//  bloquea el loop, así que los motores y los sensores nunca esperan.
 // ============================================================
 
-static int      anguloObjetivo = ANGULO_ALA_RECOGIDA;  // 0..90
-static uint32_t tTrama         = 0;   // micros() del inicio de la trama
-static uint8_t  paso           = 0;   // 0 espera, 1 pulso izq, 2 pulso der
+static uint16_t anchoObjetivo = PULSO_ALA_RECOGIDA;  // µs
+static uint32_t tTrama        = 0;   // micros() del inicio de la trama
+static uint8_t  paso          = 0;   // 0 espera, 1 pulso izq, 2 pulso der
 
-// Convierte 0..90 grados en la duración del pulso (1000..2000 microsegundos)
-static uint16_t duracionPulso(int angulo) {
-  angulo = constrain(angulo, 0, 90);
-  return (uint16_t)(1000 + (angulo * 1000L) / 90);
+// Ancho del pulso del ala derecha (espejo dentro del recorrido)
+static uint16_t anchoDerecha() {
+  if (ALA_DER_INVERTIDA) {
+    return (uint16_t)(PULSO_ALA_RECOGIDA + PULSO_ALA_DESPLIEGUE - anchoObjetivo);
+  }
+  return anchoObjetivo;
 }
 
 void alas_init() {
@@ -23,24 +28,21 @@ void alas_init() {
   pinMode(PIN_ALA_DER, OUTPUT);
   digitalWrite(PIN_ALA_IZQ, LOW);
   digitalWrite(PIN_ALA_DER, LOW);
-  anguloObjetivo = ANGULO_ALA_RECOGIDA;
+  anchoObjetivo = PULSO_ALA_RECOGIDA;
   tTrama = 0;
   paso = 0;
 }
 
 void alas_recoger() {
-  anguloObjetivo = ANGULO_ALA_RECOGIDA;
+  anchoObjetivo = PULSO_ALA_RECOGIDA;
 }
 
 void alas_desplegar() {
-  anguloObjetivo = ANGULO_ALA_DESPLIEGUE;
+  anchoObjetivo = PULSO_ALA_DESPLIEGUE;
 }
 
 void alas_actualizar() {
   uint32_t ahora = micros();
-  uint16_t durIzq = duracionPulso(anguloObjetivo);
-  uint16_t durDer = duracionPulso(ALA_DER_INVERTIDA ? (90 - anguloObjetivo)
-                                                    : anguloObjetivo);
 
   switch (paso) {
     case 0:                                    // esperar el inicio de trama
@@ -52,7 +54,7 @@ void alas_actualizar() {
       break;
 
     case 1:                                    // terminar el pulso izquierdo
-      if (ahora - tTrama >= durIzq) {
+      if (ahora - tTrama >= anchoObjetivo) {
         digitalWrite(PIN_ALA_IZQ, LOW);
         digitalWrite(PIN_ALA_DER, HIGH);
         paso = 2;
@@ -60,7 +62,7 @@ void alas_actualizar() {
       break;
 
     case 2:                                    // terminar el pulso derecho
-      if (ahora - tTrama >= (uint32_t)durIzq + durDer) {
+      if (ahora - tTrama >= (uint32_t)anchoObjetivo + anchoDerecha()) {
         digitalWrite(PIN_ALA_DER, LOW);
         paso = 0;
       }

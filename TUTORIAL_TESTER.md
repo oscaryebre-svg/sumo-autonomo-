@@ -104,21 +104,22 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 2. Pon los sensores sobre la **línea blanca** y anota los dos números.
 3. Anota la altura del sensor al piso (mm).
 
-### Test 04 — Alas (servos) (`tests/04_test_alas`)
+### Test 04 — Alas (servos MOT-110) (`tests/04_test_alas`)
 
-Las alas se mueven **despacio y de forma continua** entre la posición
-recogida y la desplegada (90° de recorrido). El Serial imprime el pulso en
-microsegundos y el ángulo equivalente. Están en los pines **D4
-(izquierda)** y **D2 (derecha)**; los pulsos se generan por software, así
-que no hay que instalar ninguna librería.
+El servo **MOT-110** es analógico (180°) y necesita pulsos continuos. Este
+test recorre despacio todo el rango (700 a 2300 µs) y el Serial imprime el
+pulso en microsegundos (el ángulo que muestra es aproximado). Están en los
+pines **D4 (izquierda)** y **D2 (derecha)**; los pulsos se generan por
+software, así que no hay que instalar ninguna librería.
 
 **Pasos:**
 1. Observa el barrido completo: debe ser **suave, sin tirones ni pausas**.
-2. Si el ala se atasca, zumba o choca con el chasis, **anota el µs** que
-   marca el Serial en ese momento (ese es el límite mecánico).
+2. Anota el **µs en el que el ala está totalmente RECOGIDA** (pegada al
+   cuerpo) y el **µs en el que está totalmente DESPLEGADA** (su tope). Si
+   zumba en un extremo, ese µs ya pasa del tope: anótalo y sigue.
 3. ¿El ala derecha se mueve "espejada" (al revés que la izquierda)?
 
-**Anota:** si el recorrido es suave, el µs donde se atasca y si la derecha
+**Anota:** los dos µs de cada ala, si el recorrido es suave y si la derecha
 va espejada. Con eso se ajustan `PULSO_ALA_RECOGIDA` y
 `PULSO_ALA_DESPLIEGUE` en `config.h`.
 
@@ -149,9 +150,11 @@ TEST 03 — MINI QTR
 - Sobre blanco: izq = ____   der = ____
 - Altura del sensor al piso (mm): ____
 
-TEST 04 — ALAS (recorrido 90°: pulso de 1000 a ~1500 µs)
+TEST 04 — ALAS (servo MOT-110, barrido de 700 a 2300 µs)
 - ¿El movimiento es suave (sin tirones ni pausas)? ( ) sí  ( ) no
-- Si se atasca o zumba, ¿en qué µs? izq ____ µs · der ____ µs
+- µs con el ala RECOGIDA:   izq ____ µs · der ____ µs
+- µs con el ala DESPLEGADA: izq ____ µs · der ____ µs
+- ¿Zumba en algún extremo? ( ) no ( ) izq en ____ µs ( ) der en ____ µs
 - ¿Derecha espejada? ( ) sí  ( ) no
 
 PROGRAMA PRINCIPAL (con Serial Monitor abierto)

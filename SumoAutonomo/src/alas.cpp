@@ -15,10 +15,17 @@ static uint16_t anchoObjetivo = PULSO_ALA_RECOGIDA;  // µs
 static uint32_t tTrama        = 0;   // micros() del inicio de la trama
 static uint8_t  paso          = 0;   // 0 espera, 1 pulso izq, 2 pulso der
 
+// Protege el servo de un valor de config.h fuera de rango
+static uint16_t limitar(uint16_t us) {
+  if (us < PULSO_MINIMO_US) return PULSO_MINIMO_US;
+  if (us > PULSO_MAXIMO_US) return PULSO_MAXIMO_US;
+  return us;
+}
+
 // Ancho del pulso del ala derecha (espejo dentro del recorrido)
 static uint16_t anchoDerecha() {
   if (ALA_DER_INVERTIDA) {
-    return (uint16_t)(PULSO_ALA_RECOGIDA + PULSO_ALA_DESPLIEGUE - anchoObjetivo);
+    return limitar((uint16_t)(PULSO_ALA_RECOGIDA + PULSO_ALA_DESPLIEGUE - anchoObjetivo));
   }
   return anchoObjetivo;
 }
@@ -28,17 +35,17 @@ void alas_init() {
   pinMode(PIN_ALA_DER, OUTPUT);
   digitalWrite(PIN_ALA_IZQ, LOW);
   digitalWrite(PIN_ALA_DER, LOW);
-  anchoObjetivo = PULSO_ALA_RECOGIDA;
+  anchoObjetivo = limitar(PULSO_ALA_RECOGIDA);
   tTrama = 0;
   paso = 0;
 }
 
 void alas_recoger() {
-  anchoObjetivo = PULSO_ALA_RECOGIDA;
+  anchoObjetivo = limitar(PULSO_ALA_RECOGIDA);
 }
 
 void alas_desplegar() {
-  anchoObjetivo = PULSO_ALA_DESPLIEGUE;
+  anchoObjetivo = limitar(PULSO_ALA_DESPLIEGUE);
 }
 
 void alas_actualizar() {

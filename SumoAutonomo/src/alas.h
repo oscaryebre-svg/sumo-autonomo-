@@ -18,7 +18,7 @@ void alas_init();
 // Despliega las alas para engañar a los sensores del rival
 void alas_desplegar();
 
-// Vuelve a recogerlas
+// Vuelve a recogerlas (al terminar el round)
 void alas_recoger();
 
 // Llamar en CADA vuelta del loop: mantiene la señal de los servos

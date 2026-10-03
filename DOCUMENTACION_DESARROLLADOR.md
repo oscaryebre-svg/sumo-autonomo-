@@ -68,8 +68,9 @@ pulsos por software, así que tampoco se usa la librería Servo).
    - Nombres de los EM-3 → `PIN_EM3_ALA_IZQ`, `PIN_EM3_CENTRAL_IZQ`,
      `PIN_EM3_CENTRAL_DER`, `PIN_EM3_ALA_DER`
    - Umbral QTR → `UMBRAL_QTR = (negro + blanco) / 2`
-   - Ángulos de las alas → `ANGULO_ALA_RECOGIDA` / `ANGULO_ALA_DESPLIEGUE`
+   - Pulsos de las alas → `PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE`
    - Alas espejadas → `ALA_DER_INVERTIDA`
+   - Duración del round → `TIEMPO_COMBATE_MS`
    - Sin módulo de arranque → `START_ACTIVO_BAJO 0`
    - Buck de 12 V → `PWM_MAX 255`; 6S directa → `PWM_MAX 70`
 3. Se recompila, se sube a la rama y el tester repite la prueba.
@@ -106,5 +107,6 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 - Umbral QTR real y alturas de montaje (test 03).
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
-- Confirmar en el test 04 que ambas alas recorren 0°–90° y si la derecha
-  va espejada (`ALA_DER_INVERTIDA`).
+- Confirmar en el test 04 que el movimiento es suave y ajustar los pulsos
+  `PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE` (y `ALA_DER_INVERTIDA` si
+  la derecha va espejada).

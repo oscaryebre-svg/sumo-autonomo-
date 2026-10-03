@@ -106,16 +106,21 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 
 ### Test 04 — Alas (servos) (`tests/04_test_alas`)
 
-Las dos alas se mueven juntas de **0° a 90°** y de vuelta, imprimiendo el
-ángulo. Las alas solo sirven para engañar a los sensores del rival, no
-tienen más movimientos. Están en los pines **D4 (izquierda)** y **D2
-(derecha)**; el test genera los pulsos por software, así que no hay que
-instalar ninguna librería.
+Las alas se mueven **despacio y de forma continua** entre la posición
+recogida y la desplegada (90° de recorrido). El Serial imprime el pulso en
+microsegundos y el ángulo equivalente. Están en los pines **D4
+(izquierda)** y **D2 (derecha)**; los pulsos se generan por software, así
+que no hay que instalar ninguna librería.
 
 **Pasos:**
-1. Observa el barrido: ¿completan los 0° a 90° sin forzar?
-2. Si alguna se atasca o choca con el chasis, anota en qué ángulo.
+1. Observa el barrido completo: debe ser **suave, sin tirones ni pausas**.
+2. Si el ala se atasca, zumba o choca con el chasis, **anota el µs** que
+   marca el Serial en ese momento (ese es el límite mecánico).
 3. ¿El ala derecha se mueve "espejada" (al revés que la izquierda)?
+
+**Anota:** si el recorrido es suave, el µs donde se atasca y si la derecha
+va espejada. Con eso se ajustan `PULSO_ALA_RECOGIDA` y
+`PULSO_ALA_DESPLIEGUE` en `config.h`.
 
 ## 5. Formulario de reporte (cópialo y rellénalo)
 
@@ -144,15 +149,17 @@ TEST 03 — MINI QTR
 - Sobre blanco: izq = ____   der = ____
 - Altura del sensor al piso (mm): ____
 
-TEST 04 — ALAS (recorrido de 0° a 90°)
-- ¿Completan los 90° sin forzar? ( ) sí  ( ) no
-- Si se atasca: ala izq en ____° · ala der en ____°
+TEST 04 — ALAS (recorrido 90°: pulso de 1000 a ~1500 µs)
+- ¿El movimiento es suave (sin tirones ni pausas)? ( ) sí  ( ) no
+- Si se atasca o zumba, ¿en qué µs? izq ____ µs · der ____ µs
 - ¿Derecha espejada? ( ) sí  ( ) no
 
 PROGRAMA PRINCIPAL (con Serial Monitor abierto)
 - Pega 15-20 líneas del Serial en cada situación:
   a) al arrancar    b) buscando     c) frente al rival     d) en el borde
 - ¿Se despliegan las alas al arrancar el combate? ( ) sí  ( ) no
+- ¿Se quedan fijas durante el combate (sin vibrar)? ( ) sí  ( ) no
+- ¿Se recogen al terminar el round (a los 3 min)? ( ) sí  ( ) no
 - ¿Empuja al rival de frente? ( ) sí  ( ) no
 - ¿Retrocede y gira al pisar la línea blanca? ( ) sí  ( ) no
 - ¿Se sale del dohyo en algún momento? ( ) sí  ( ) no
@@ -178,7 +185,7 @@ EXTRA (muy útil)
 | No detecta la línea blanca | Revisa altura del sensor y repite el test 03 |
 | Se sale del dohyo | Repórtalo con el video de la situación |
 | Motores muy lentos o muy agresivos | Repórtalo; se ajusta en `config.h` |
-| Las alas tiemblan | Repórtalo; se cambian los pines de los servos |
+| Las alas dan tirones o zumban | Repórtalo con el µs donde empieza (test 04); se ajustan los pulsos |
 
 **Regla de oro:** si algo se ve raro, **grábalo 10 segundos y pásalo**:
 vale más un video que diez descripciones.

@@ -1,47 +1,51 @@
 // ============================================================
-//  TEST 04 — ALAS (servos MOT-110 en D2 y D4)
-//  Las alas tienen 90° de recorrido. Este test las barre de 0° a 90°
-//  y de vuelta, imprimiendo el ángulo.
+//  TEST 04 — ALAS (servos en D4 izquierda y D2 derecha)
 //
-//  D2 y D4 no son pines de temporizador, así que este test genera los
-//  pulsos a mano (igual que el programa principal): no hace falta
-//  instalar ninguna librería.
+//  Mueve las alas DESPACIO y de forma continua entre los dos pulsos
+//  de config.h (recogida y despliegue), imprimiendo el pulso en
+//  microsegundos y el ángulo equivalente.
 //
-//  Sirve para comprobar:
-//   1. Que las dos alas se mueven en todo el recorrido sin forzar.
-//   2. Si alguna se atasca o choca con el chasis (anotar el ángulo).
-//   3. Si el ala derecha va "espejada" (al revés que la izquierda).
+//  Los pines D2/D4 no son de temporizador, así que los pulsos se
+//  generan a mano: no hace falta instalar ninguna librería.
+//
+//  Sirve para:
+//   1. Comprobar que el movimiento es suave, sin tirones ni pausas.
+//   2. Encontrar el pulso donde el ala se atasca o zumba (límite
+//      mecánico) y ajustar PULSO_ALA_* en config.h.
+//   3. Ver si el ala derecha va "espejada" (al revés que la izquierda).
 // ============================================================
 #define PIN_ALA_IZQ 4
 #define PIN_ALA_DER 2
-#define RECORRIDO   90      // grados reales de las alas
 
-// Envía un pulso de servo: 0° -> 1 ms, 90° -> 2 ms
-void pulso(uint8_t pin, int grados) {
-  int us = 1000 + (grados * 1000L) / 90;
+#define PULSO_MIN  1000   // µs (posición recogida)
+#define PULSO_MAX  1600   // µs (un poco más allá del despliegue, por si hay margen)
+#define PASO_US      10   // µs que avanza en cada paso (movimiento suave)
+
+void pulso(uint8_t pin, int ancho) {
   digitalWrite(pin, HIGH);
-  delayMicroseconds(us);
+  delayMicroseconds(ancho);
   digitalWrite(pin, LOW);
 }
 
-// Repite el pulso varias veces para que el servo llegue y se mantenga
-void mover(int grados) {
-  Serial.println(grados);
-  for (int i = 0; i < 10; i++) {
-    pulso(PIN_ALA_IZQ, grados);
-    pulso(PIN_ALA_DER, grados);
-    delay(20);
-  }
+void mover(int ancho) {
+  pulso(PIN_ALA_IZQ, ancho);          // una trama de 20 ms para cada servo
+  pulso(PIN_ALA_DER, ancho);
+  delay(20);
+  int grados = (ancho - 1000) * 180L / 1000;   // 1000..2000 µs ≈ 0..180°
+  Serial.print(ancho);
+  Serial.print(F(" us (~"));
+  Serial.print(grados);
+  Serial.println(F(" grados)"));
 }
 
 void setup() {
   pinMode(PIN_ALA_IZQ, OUTPUT);
   pinMode(PIN_ALA_DER, OUTPUT);
   Serial.begin(115200);
-  Serial.println(F("TEST 04 ALAS en D4(izq) y D2(der): barrido 0..90..0"));
+  Serial.println(F("TEST 04 ALAS (D4 izq, D2 der): barrido suave 1000..1600 us"));
 }
 
 void loop() {
-  for (int a = 0; a <= RECORRIDO; a += 5) mover(a);
-  for (int a = RECORRIDO; a >= 0; a -= 5) mover(a);
+  for (int a = PULSO_MIN; a <= PULSO_MAX; a += PASO_US) mover(a);
+  for (int a = PULSO_MAX; a >= PULSO_MIN; a -= PASO_US) mover(a);
 }

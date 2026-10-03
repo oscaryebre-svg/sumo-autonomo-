@@ -72,24 +72,23 @@
 // Duración del round: al cumplirse, el robot se detiene y recoge las alas.
 #define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
 
-// ===================== ALAS (recorrido en config.h) =====================
+// ===================== ALAS (ángulos verificados en hardware) =====================
 // Servo MOT-110 (Steren): analógico, 180°, 3,5-6 V, 40 mA. Se controlan
 // con la librería Servo (viene incluida en el IDE): ella genera los pulsos
 // por temporizador, así que el bucle no tiene que mantenerlos y el ala se
 // mueve a la máxima velocidad del servo.
 //
-// Cada ala tiene DOS posiciones. Movimiento pedido: de 0° a 90°.
-//   0°  -> recogida (inicio/medida y final del round)
-//   90° -> desplegada (combate, para engañar a los sensores)
-//
-// OJO: en el código que funcionaba, las dos alas usaban ángulos distintos
-// (120/75 y 10/175) porque van montadas espejadas. Si en el test 04 ves
-// que un ala gira al revés que la otra, cambia su pareja espejada:
-//   ala derecha espejada -> ANGULO_DER_RECOGIDA 180 y DESPLIEGUE 90
-#define ANGULO_IZQ_RECOGIDA      0   // ala izquierda pegada al cuerpo
-#define ANGULO_IZQ_DESPLIEGUE   90   // ala izquierda extendida
-#define ANGULO_DER_RECOGIDA      0   // ala derecha pegada al cuerpo
-#define ANGULO_DER_DESPLIEGUE   90   // ala derecha extendida
+// Cada ala tiene DOS posiciones, medidas en el robot real (las del código
+// que ya funcionaba). Van montadas ESPEJADAS, por eso los ángulos son
+// distintos y el recorrido no es idéntico:
+//   izquierda: 120° (recogida) ->  10° (desplegada) = 110°
+//   derecha:    75° (recogida) -> 175° (desplegada) = 100°
+// Recogida = inicio/medida y final del round; desplegada = durante el combate.
+// Si el test 04 da otros topes, ajustar SOLO estos cuatro números.
+#define ANGULO_IZQ_RECOGIDA    120   // ala izquierda pegada al cuerpo
+#define ANGULO_IZQ_DESPLIEGUE   10   // ala izquierda extendida
+#define ANGULO_DER_RECOGIDA     75   // ala derecha pegada al cuerpo
+#define ANGULO_DER_DESPLIEGUE  175   // ala derecha extendida
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

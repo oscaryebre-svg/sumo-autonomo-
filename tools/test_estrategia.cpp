@@ -5,7 +5,7 @@
 //  simulados. Es la MISMA lógica que corre en el robot.
 //
 //  Compilar y ejecutar (dentro de tools/), en una sola línea:
-//    g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . test_estrategia.cpp
+//    g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock test_estrategia.cpp
 //        ../SumoAutonomo/src/estrategia.cpp ../SumoAutonomo/src/motores.cpp
 //        ../SumoAutonomo/src/sensores.cpp ../SumoAutonomo/src/alas.cpp
 //        -o test_estrategia && ./test_estrategia

@@ -11,19 +11,20 @@ verifica la máquina de estados con sensores simulados:
 
 ```bash
 cd "tools"
-g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . \
+g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock \
   test_estrategia.cpp ../SumoAutonomo/src/estrategia.cpp \
   ../SumoAutonomo/src/motores.cpp ../SumoAutonomo/src/sensores.cpp \
   ../SumoAutonomo/src/alas.cpp -o test_estrategia
 ./test_estrategia          # debe terminar con "RESULTADO: TODAS OK"
 ```
 
-También comprueba los ángulos que se escriben en cada servo y que el
-recorrido de cada ala es de 90° (de 0 a 90):
+También comprueba los ángulos que se escriben en cada servo, que cada ala
+cambia de posición y que las dos alas van montadas espejadas (el recorrido
+real, ~110° en la izquierda y ~100° en la derecha, se mide con el test 04):
 
 ```bash
 cd "tools"
-g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . test_servo.cpp \
+g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock test_servo.cpp \
   ../SumoAutonomo/src/alas.cpp -o test_servo
 ./test_servo               # debe terminar con "RESULTADO: TODAS OK"
 ```

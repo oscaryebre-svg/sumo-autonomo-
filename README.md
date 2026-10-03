@@ -20,7 +20,7 @@ simulación 2D para desarrollo sin el robot físico.
 | 2 motores Core 750 RPM (6 V) | Tracción diferencial | PWM + dirección |
 | 4 sensores EM-3 (E-Robots) | Detectar al rival (frente) | Digital (1 = rival) |
 | 2 sensores Mini QTR (E-Robots) | Detectar el borde del dohyo | Analógico (0–1023) |
-| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | PWM de servo |
+| 2 servos MOT-110 (Steren) | Alas retráctiles de 90° (engañan sensores) | Servo analógico: 3,5–6 V, 40 mA, pulsos de 50 Hz |
 | Batería LiPo 6S 22,2 V 850 mAh | Alimentación | ⚠️ ver abajo |
 
 ## ⚠️ Alimentación (importante)

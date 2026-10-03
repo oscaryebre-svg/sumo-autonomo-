@@ -18,6 +18,16 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . \
 ./test_estrategia          # debe terminar con "RESULTADO: TODAS OK"
 ```
 
+También mide los pulsos que se envían a los servos (ancho y periodo de
+trama), con un reloj controlable:
+
+```bash
+cd "tools"
+g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I . test_servo.cpp \
+  ../SumoAutonomo/src/alas.cpp -o test_servo
+./test_servo               # debe terminar con "RESULTADO: TODAS OK"
+```
+
 También se puede compilar y ejecutar el `.ino` completo en PC:
 
 ```bash
@@ -107,6 +117,7 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 - Umbral QTR real y alturas de montaje (test 03).
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
-- Confirmar en el test 04 que el movimiento es suave y ajustar los pulsos
-  `PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE` (y `ALA_DER_INVERTIDA` si
-  la derecha va espejada).
+- Ajustar con el test 04 los pulsos de los topes reales de cada ala
+  (`PULSO_ALA_RECOGIDA` / `PULSO_ALA_DESPLIEGUE`) y `ALA_DER_INVERTIDA`.
+  El MOT-110 es analógico de 180°: los pulsos válidos van de 600 a 2400 µs
+  y el test barre 700–2300 µs para medir los topes.

@@ -21,16 +21,38 @@
 #define constrain(amt, low, high) \
   ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
 
+// ---- Reloj controlable desde los tests ----
+inline unsigned long &microsActual() { static unsigned long t = 0; return t; }
+inline unsigned long micros() { return microsActual(); }
+inline unsigned long millis() { return 0; }
+inline void delay(unsigned long) {}
+inline void delayMicroseconds(unsigned int) {}
+
+// ---- Registro de transiciones de pines (para medir los pulsos) ----
+struct RegistroPines {
+  static const int MAX = 512;
+  int n;
+  uint8_t pin[MAX];
+  uint8_t nivel[MAX];
+  unsigned long t[MAX];
+};
+inline RegistroPines &registro() { static RegistroPines r = {0, {0}, {0}, {0}}; return r; }
+
 inline void pinMode(uint8_t, uint8_t) {}
-inline void digitalWrite(uint8_t, uint8_t) {}
+
+inline void digitalWrite(uint8_t p, uint8_t v) {
+  RegistroPines &r = registro();
+  if (r.n < RegistroPines::MAX) {
+    r.pin[r.n] = p;
+    r.nivel[r.n] = v;
+    r.t[r.n] = micros();
+    r.n++;
+  }
+}
+
 inline int digitalRead(uint8_t) { return 0; }
 inline void analogWrite(uint8_t, int) {}
 inline int analogRead(uint8_t) { return 0; }
-inline unsigned long millis() { return 0; }
-// micros() avanza para que la máquina de pulsos del servo progrese
-inline unsigned long micros() { static unsigned long t = 0; t += 4000; return t; }
-inline void delay(unsigned long) {}
-inline void delayMicroseconds(unsigned int) {}
 
 // ---- Serial mínimo (solo para poder compilar el .ino en PC) ----
 class PrintMock {

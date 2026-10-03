@@ -4,3 +4,4 @@ simulacion/__pycache__/
 *.pyc
 tools/test_estrategia
 tools/test_ino
+tools/test_servo

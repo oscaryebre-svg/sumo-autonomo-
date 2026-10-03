@@ -74,17 +74,19 @@
 #define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
 
 // ===================== ALAS (90° de recorrido) =====================
-// Las alas SOLO engañan a los sensores del rival: se recogen al inicio
-// (posición de medida), se despliegan al arrancar el combate y se vuelven
-// a recoger cuando el round termina.
+// Servo MOT-110 (Steren): analógico, 180° de giro, alimentación 3,5-6 V
+// y 40 mA de trabajo (se puede alimentar de la placa). Al ser analógico
+// hay que enviarle pulsos SIEMPRE (50 Hz) para que mantenga la posición:
+// de eso se encarga alas.cpp.
 //
-// Un servo estándar recorre 180° con pulsos de 1000 a 2000 µs, así que
-// 90° de recorrido son 500 µs de diferencia. Estos dos valores se ajustan
-// con el test 04 (si el ala se atasca o zumba, el pulso pasa del límite).
+// Las alas solo tienen dos posiciones y sus pulsos dependen del montaje
+// mecánico: se calibran con el test 04 (anotar el µs de cada tope).
 #define PULSO_ALA_RECOGIDA     1000   // µs: alas pegadas al cuerpo
 #define PULSO_ALA_DESPLIEGUE   1500   // µs: alas extendidas (90°)
 #define ALA_DER_INVERTIDA      0      // 1 = el servo derecho va "espejado"
-#define PERIODO_TRAMA_US       20000  // 20 ms entre tramas de pulso (50 Hz)
+#define PERIODO_TRAMA_US       20000  // 20 ms entre tramas (50 Hz, estándar analógico)
+#define PULSO_MINIMO_US        600    // límite de seguridad del servo
+#define PULSO_MAXIMO_US        2400   // límite de seguridad del servo
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

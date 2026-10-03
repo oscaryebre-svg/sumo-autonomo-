@@ -3,7 +3,7 @@
 //
 //  Secuencia del round:
 //    1. Espera la señal de arranque (módulo o START_ACTIVO_BAJO 0).
-//    2. Despliega las alas (90°) y pelea hasta TIEMPO_COMBATE_MS.
+//    2. Despliega las alas y pelea hasta TIEMPO_COMBATE_MS.
 //    3. Al terminar: frena y recoge las alas.
 //
 //  TODOS los ajustes están en src/config.h

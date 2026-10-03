@@ -2,7 +2,7 @@
 //  alas.h — control de los 2 servos MOT-110 (alas retráctiles)
 //
 //  Las alas SOLO sirven para engañar a los sensores del rival.
-//  Van montadas espejadas (izquierda 120°/10°, derecha 75°/175°) y
+//  Van montadas espejadas (izquierda 90°/0°, derecha 90°/180°) y
 //  tienen dos posiciones:
 //    recogida   -> al inicio (medida) y al terminar el round
 //    desplegada -> durante el combate

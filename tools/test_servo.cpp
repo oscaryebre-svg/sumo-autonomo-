@@ -1,8 +1,8 @@
 // ============================================================
 //  Prueba de las alas en PC (con el mock de la librería Servo):
 //  comprueba que alas.cpp escribe los ángulos correctos en cada
-//  servo, que cada ala cambia de posición y que las dos van
-//  montadas espejadas.
+//  servo, que cada ala recorre 90° y que las dos van montadas
+//  espejadas.
 //
 //  Compilar y ejecutar (dentro de tools/):
 //    g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock test_servo.cpp
@@ -52,13 +52,13 @@ int main() {
   comprobar("al recoger, la derecha vuelve",
             ultimoAngulo(PIN_ALA_DER) == ANGULO_DER_RECOGIDA);
 
-  // Cada ala debe cambiar de posición (el recorrido real lo mide el test 04).
+  // Cada ala recorre exactamente 90° (izquierda 90->0, derecha 90->180)
   int recorridoIzq = abs(ANGULO_IZQ_RECOGIDA - ANGULO_IZQ_DESPLIEGUE);
   int recorridoDer = abs(ANGULO_DER_RECOGIDA - ANGULO_DER_DESPLIEGUE);
   std::printf("  recorrido: izq %d grados, der %d grados\n",
               recorridoIzq, recorridoDer);
-  comprobar("el ala izquierda cambia de posición", recorridoIzq > 0);
-  comprobar("el ala derecha cambia de posición", recorridoDer > 0);
+  comprobar("el ala izquierda recorre 90 grados", recorridoIzq == 90);
+  comprobar("el ala derecha recorre 90 grados", recorridoDer == 90);
 
   // Aviso (no es fallo): las alas espejadas deben girar en sentidos opuestos
   int sentiIzq = ANGULO_IZQ_DESPLIEGUE - ANGULO_IZQ_RECOGIDA;

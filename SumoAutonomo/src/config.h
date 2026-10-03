@@ -72,23 +72,21 @@
 // Duración del round: al cumplirse, el robot se detiene y recoge las alas.
 #define TIEMPO_COMBATE_MS      180000  // 3 minutos (ajustar a las reglas)
 
-// ===================== ALAS (ángulos verificados en hardware) =====================
+// ===================== ALAS (ángulos del robot real) =====================
 // Servo MOT-110 (Steren): analógico, 180°, 3,5-6 V, 40 mA. Se controlan
 // con la librería Servo (viene incluida en el IDE): ella genera los pulsos
-// por temporizador, así que el bucle no tiene que mantenerlos y el ala se
-// mueve a la máxima velocidad del servo.
+// por temporizador y el ala se mueve a la máxima velocidad del servo.
 //
-// Cada ala tiene DOS posiciones, medidas en el robot real (las del código
-// que ya funcionaba). Van montadas ESPEJADAS, por eso los ángulos son
-// distintos y el recorrido no es idéntico:
-//   izquierda: 120° (recogida) ->  10° (desplegada) = 110°
-//   derecha:    75° (recogida) -> 175° (desplegada) = 100°
+// Las dos alas comparten la posición de recogida en 90°. Van montadas
+// ESPEJADAS, así que cada una se despliega 90° en sentido contrario:
+//   izquierda: 90° (recogida) ->   0° (desplegada) = 90° (decreciente)
+//   derecha:   90° (recogida) -> 180° (desplegada) = 90° (creciente)
 // Recogida = inicio/medida y final del round; desplegada = durante el combate.
-// Si el test 04 da otros topes, ajustar SOLO estos cuatro números.
-#define ANGULO_IZQ_RECOGIDA    120   // ala izquierda pegada al cuerpo
-#define ANGULO_IZQ_DESPLIEGUE   10   // ala izquierda extendida
-#define ANGULO_DER_RECOGIDA     75   // ala derecha pegada al cuerpo
-#define ANGULO_DER_DESPLIEGUE  175   // ala derecha extendida
+// Si en el test 04 el ala derecha girase al revés, intercambiar las dos parejas.
+#define ANGULO_IZQ_RECOGIDA     90   // ala izquierda pegada al cuerpo
+#define ANGULO_IZQ_DESPLIEGUE    0   // ala izquierda extendida
+#define ANGULO_DER_RECOGIDA     90   // ala derecha pegada al cuerpo
+#define ANGULO_DER_DESPLIEGUE  180   // ala derecha extendida
 
 // ===================== DEPURACIÓN =====================
 #define DEBUG_SERIAL  1   // 1 = imprime estados por USB (Serial Monitor a BAUDRATE)

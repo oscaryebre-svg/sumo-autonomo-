@@ -20,7 +20,9 @@ entender qué hace el robot por dentro.
 
 1. Entra a <https://www.arduino.cc/en/software>.
 2. Descarga la versión 2.x para tu sistema:
-   - **Windows:** instala el `.exe` como cualquier programa.
+   - **Windows:** instala el `.exe` como cualquier programa. Si aparece un
+     aviso azul de **SmartScreen**, pulsa *Más información* → *Ejecutar de
+     todas formas*.
    - **Linux:** descarga el AppImage; haz clic derecho → *Permisos* →
      marca *Ejecutable* → doble clic para abrirlo.
 3. Abre el Arduino IDE una vez para que cree sus carpetas.
@@ -38,26 +40,39 @@ incluida en el IDE de Arduino.
    - Si la placa dice **Genesis/M1** → elige **Arduino Nano**.
    - Si no estás seguro, mira la serigrafía de la placa y anótala en el reporte.
 
+> **Windows:** si en **Tools → Port** no aparece ningún `COM…`, instala el
+> driver USB de la placa y vuelve a conectarla. Para clones estilo **Nano**
+> suele hacer falta el driver **CH340**; las placas **Leonardo/XMotion** no
+> lo necesitan.
+
 ## 3. Obtener el código y subirlo al robot
 
 ### 3.1 Descargar el código desde GitHub
 
 El código está en <https://github.com/oscaryebre-svg/sumo-autonomo->, en la
-rama **main** (la que se abre por defecto). Elige una forma:
+rama **main** (la que se abre por defecto).
 
-- **Sin instalar nada (recomendado):** abre el enlace, pulsa el botón verde
-  **Code** y luego **Download ZIP**. Descomprime el archivo y quédate con la
-  carpeta `SumoAutonomo` que hay dentro (contiene también la subcarpeta
-  `src`, no la borres).
-- **Con Git** (si ya lo tienes): clona la rama `main` del repositorio.
+**En Windows (paso a paso):**
+
+1. Abre el enlace y pulsa el botón verde **Code** → **Download ZIP**.
+2. Se descarga un archivo `.zip` (normalmente en **Descargas**).
+3. Clic derecho sobre el `.zip` → **Extraer todo…** → **Extraer**.
+4. Se crea una carpeta con el nombre repetido dos veces. Entra hasta que
+   veas dentro la carpeta **`SumoAutonomo`** (y no la muevas ni la renombres:
+   dentro tiene que quedar la subcarpeta **`src`**).
 
 > Si no descomprimes el ZIP, o borras la carpeta `src`, el IDE de Arduino no
 > encontrará los archivos.
+
+**Otros sistemas / con Git:** también puedes clonar la rama `main` del
+repositorio y abrir la carpeta `SumoAutonomo`.
 
 ### 3.2 Subir el programa principal
 
 1. Menú **File → Open** → busca la carpeta `SumoAutonomo` y abre
    **`SumoAutonomo.ino`** (⚠️ no renombres la carpeta ni el archivo).
+   En Windows la ruta será parecida a
+   `Descargas\...\SumoAutonomo\SumoAutonomo.ino`.
 2. Pulsa el botón **Upload (→)** (flecha, arriba a la izquierda).
 3. Abajo debe terminar en `Done uploading` sin errores.
 4. Abre **Tools → Serial Monitor** y en la esquina inferior derecha
@@ -202,7 +217,9 @@ EXTRA (muy útil)
 | Síntoma | Qué hacer |
 |---|---|
 | `Error: port not found` | Revisa el cable y el puerto en Tools → Port |
-| `config.h: No such file or directory` | Falta la carpeta `src` o el ZIP es antiguo | Descarga otra vez el ZIP y no borres la carpeta `src` |
+| No aparece ningún puerto `COM` (Windows) | Falta el driver USB: instala el **CH340** y reconecta |
+| `Servo.h: No such file or directory` | Instala la librería **Servo** desde **Library Manager** |
+| `config.h: No such file or directory` | Descarga otra vez el ZIP y no borres la carpeta `src` |
 | Sube pero el robot no se mueve | Sin módulo de arranque es normal; repórtalo |
 | No detecta la línea blanca | Revisa altura del sensor y repite el test 03 |
 | Se sale del dohyo | Repórtalo con el video de la situación |

@@ -43,15 +43,16 @@ incluida en el IDE de Arduino.
 ### 3.1 Descargar el código desde GitHub
 
 El código está en <https://github.com/oscaryebre-svg/sumo-autonomo->, en la
-rama **programacion-sumo**. Elige una forma:
+rama **main** (la que se abre por defecto). Elige una forma:
 
 - **Sin instalar nada (recomendado):** abre el enlace, pulsa el botón verde
   **Code** y luego **Download ZIP**. Descomprime el archivo y quédate con la
-  carpeta `SumoAutonomo` que hay dentro.
-- **Con Git** (si ya lo tienes): clona la rama `programacion-sumo` del
-  repositorio.
+  carpeta `SumoAutonomo` que hay dentro (contiene también la subcarpeta
+  `src`, no la borres).
+- **Con Git** (si ya lo tienes): clona la rama `main` del repositorio.
 
-> Si no descomprimes el ZIP, el IDE de Arduino no encontrará los archivos.
+> Si no descomprimes el ZIP, o borras la carpeta `src`, el IDE de Arduino no
+> encontrará los archivos.
 
 ### 3.2 Subir el programa principal
 
@@ -201,6 +202,7 @@ EXTRA (muy útil)
 | Síntoma | Qué hacer |
 |---|---|
 | `Error: port not found` | Revisa el cable y el puerto en Tools → Port |
+| `config.h: No such file or directory` | Falta la carpeta `src` o el ZIP es antiguo | Descarga otra vez el ZIP y no borres la carpeta `src` |
 | Sube pero el robot no se mueve | Sin módulo de arranque es normal; repórtalo |
 | No detecta la línea blanca | Revisa altura del sensor y repite el test 03 |
 | Se sale del dohyo | Repórtalo con el video de la situación |

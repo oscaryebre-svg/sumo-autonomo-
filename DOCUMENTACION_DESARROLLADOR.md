@@ -61,6 +61,7 @@ Genera `simulacion/resultados/*.csv` (traza completa) y `*.png`
 sudo pacman -S arduino-cli               # una sola vez
 arduino-cli core update-index
 arduino-cli core install arduino:avr
+arduino-cli lib install Servo
 arduino-cli compile --fqbn arduino:avr:leonardo SumoAutonomo/
 # si la placa es estilo Nano:
 arduino-cli compile --fqbn arduino:avr:nano SumoAutonomo/

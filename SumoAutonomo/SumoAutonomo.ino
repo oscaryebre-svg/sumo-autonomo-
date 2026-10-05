@@ -8,11 +8,11 @@
 //
 //  TODOS los ajustes están en src/config.h
 // ============================================================
-#include "config.h"
-#include "motores.h"
-#include "sensores.h"
-#include "alas.h"
-#include "estrategia.h"
+#include "src/config.h"
+#include "src/motores.h"
+#include "src/sensores.h"
+#include "src/alas.h"
+#include "src/estrategia.h"
 
 static bool     combate         = false;  // ¿hay un round en curso?
 static bool     roundTerminado  = false;  // evita reiniciar sin soltar la señal

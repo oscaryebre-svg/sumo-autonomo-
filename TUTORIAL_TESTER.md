@@ -3,6 +3,8 @@
 Este documento es para la persona que tiene el robot físicamente.
 Aquí está TODO lo que necesitas hacer, sin saber programar:
 instalar, subir el código, calibrar y **documentar los resultados**.
+Al final tienes una **explicación del código** (sección 8) por si quieres
+entender qué hace el robot por dentro.
 
 > ⚠️ **Seguridad de la batería (leer primero)**
 > - La batería es **LiPo 6S de 22,2 V**. No la perfore, no la cortocircuite y
@@ -36,7 +38,22 @@ incluida en el IDE de Arduino.
    - Si la placa dice **Genesis/M1** → elige **Arduino Nano**.
    - Si no estás seguro, mira la serigrafía de la placa y anótala en el reporte.
 
-## 3. Subir el programa principal
+## 3. Obtener el código y subirlo al robot
+
+### 3.1 Descargar el código desde GitHub
+
+El código está en <https://github.com/oscaryebre-svg/sumo-autonomo->, en la
+rama **programacion-sumo**. Elige una forma:
+
+- **Sin instalar nada (recomendado):** abre el enlace, pulsa el botón verde
+  **Code** y luego **Download ZIP**. Descomprime el archivo y quédate con la
+  carpeta `SumoAutonomo` que hay dentro.
+- **Con Git** (si ya lo tienes): clona la rama `programacion-sumo` del
+  repositorio.
+
+> Si no descomprimes el ZIP, el IDE de Arduino no encontrará los archivos.
+
+### 3.2 Subir el programa principal
 
 1. Menú **File → Open** → busca la carpeta `SumoAutonomo` y abre
    **`SumoAutonomo.ino`** (⚠️ no renombres la carpeta ni el archivo).
@@ -192,3 +209,83 @@ EXTRA (muy útil)
 
 **Regla de oro:** si algo se ve raro, **grábalo 10 segundos y pásalo**:
 vale más un video que diez descripciones.
+
+## 8. Explicación del código (para entender qué subes)
+
+> Esta sección es informativa: no necesitas programar para hacer los tests.
+> Sirve para que entiendas qué hace el robot por dentro.
+
+### 8.1 Qué hace cada archivo
+
+| Archivo | En una frase |
+|---|---|
+| `SumoAutonomo/SumoAutonomo.ino` | Programa principal: la secuencia del round (esperar → pelear → parar). |
+| `SumoAutonomo/src/config.h` | Los números ajustables: pines, velocidades, tiempos y ángulos de las alas. |
+| `SumoAutonomo/src/estrategia.cpp` | El cerebro: decide el movimiento en cada instante. |
+| `SumoAutonomo/src/motores.cpp` | Da marcha y velocidad a las 2 ruedas. |
+| `SumoAutonomo/src/sensores.cpp` | Lee los 4 sensores de rival y los 2 del piso. |
+| `SumoAutonomo/src/alas.cpp` | Mueve los 2 servos de las alas. |
+| `SumoAutonomo/src/tipos.h` | Los "sobres" de datos que se pasan los módulos. |
+| `tests/01_test_motores` … `tests/04_test_alas` | Los 4 tests de calibración. |
+
+Ninguna carpeta ni archivo debe renombrarse: el IDE de Arduino los busca
+por su nombre.
+
+### 8.2 La vuelta del programa (el bucle)
+
+El robot repite sin parar este ciclo, muchísimas veces por segundo:
+
+1. **Lee** los sensores (rival y piso).
+2. **Decide** (la estrategia) si toca buscar, atacar o escapar.
+3. **Mueve** las ruedas según esa decisión.
+
+Además, en el Serial Monitor imprime una línea cada 0,1 s para que veas qué
+está "pensando" en cada momento.
+
+### 8.3 La estrategia: la misma pregunta, por orden de importancia
+
+En cada vuelta, el robot mira las cosas en este orden:
+
+```
+1º ¿Toco la línea blanca?  ->  ESCAPAR del borde   (lo más importante)
+2º ¿Veo al rival?          ->  ATACAR
+3º No veo nada             ->  BUSCAR girando
+```
+
+- **ESCAPAR:** si un sensor del piso ve el blanco, primero **retrocede
+  180 ms** y luego **gira 420 ms**. Cada vez gira hacia el lado contrario
+  del escape anterior, para no quedarse atrapado en una esquina. Mientras
+  escapa **ignora al rival** (por eso va primero).
+- **ATACAR:** si un sensor de rival lo detecta:
+  - si lo tiene **de frente** → empuja con las dos ruedas a tope;
+  - si lo tiene **a un lado** → hace un arco (una rueda lenta y otra
+    rápida) para **girar y avanzar a la vez**, cerrándole la distancia.
+- **BUSCAR:** si no ve a nadie, **gira despacio sobre sí mismo** para
+  barrer los 360° del dohyo. Si acaba de perder al rival, durante 0,8 s
+  sigue girando hacia el último lado donde lo vio.
+
+Esta lógica es exactamente la que cuenta el campo `est=` del Serial
+Monitor: **0** buscar, **1** atacar, **2** escapar.
+
+### 8.4 Los sentidos del robot
+
+- **4 sensores de rival (EM-3)**, digitales: `1` = rival delante. Hay dos a
+  los lados (las "alas") y dos junto al centro; así distingue si el rival
+  está de frente o de lado.
+- **2 sensores de piso (Mini QTR)**, analógicos (0–1023): uno a cada lado.
+  Sobre la línea blanca dan un valor alto; sobre el negro del dohyo, bajo.
+  El robot los usa para no salirse.
+
+### 8.5 Las alas
+
+Los 2 servos **no empujan al rival**: solo sirven para **engañar a sus
+sensores**. Se **recogen** (90°, pegadas al cuerpo) antes de empezar y al
+terminar el round, y se **despliegan** (una a 0° y la otra a 180°, 90° cada
+una) durante el combate. Van montadas espejadas.
+
+### 8.6 Dónde se ajusta todo
+
+Casi todo lo que se puede cambiar está en `SumoAutonomo/src/config.h`:
+pines, velocidades, tiempos y los ángulos de las alas. Por eso el
+desarrollador solo toca ese archivo con los datos que tú anotes en el
+reporte.

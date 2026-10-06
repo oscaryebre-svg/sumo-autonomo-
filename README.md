@@ -3,8 +3,9 @@
 Programa de prototipado de un robot de sumo autónomo con 2 alas de servos.
 
 Control de un robot de sumo autónomo para Arduino (placa XMotion/Genesis de
-JSumo, estilo Leonardo/Nano) con estrategia de combate, alas de engaño y
-simulación 2D para desarrollo sin el robot físico.
+JSumo, estilo Leonardo/Nano) con estrategia de combate, alas que llevan los
+sensores de búsqueda del rival y simulación 2D para desarrollo sin el robot
+físico.
 
 ## Documentos
 
@@ -18,9 +19,9 @@ simulación 2D para desarrollo sin el robot físico.
 | Componente | Rol | Tipo de señal |
 |---|---|---|
 | 2 motores Core 750 RPM (6 V) | Tracción diferencial | PWM + dirección |
-| 4 sensores EM-3 (E-Robots) | Detectar al rival (frente) | Digital (1 = rival) |
+| 4 sensores EM-3 (E-Robots) | Detectar al rival (2 van en las alas) | Digital (1 = rival) |
 | 2 sensores Mini QTR (E-Robots) | Detectar el borde del dohyo | Analógico (0–1023) |
-| 2 servos MOT-110 (Steren) | Alas retráctiles (engañan sensores) | Librería Servo · analógico 3,5–6 V, 40 mA |
+| 2 servos MOT-110 (Steren) | Alas retráctiles con los EM-3 de búsqueda | Librería Servo · analógico 3,5–6 V, 40 mA |
 | Batería LiPo 6S 22,2 V 850 mAh | Alimentación | ⚠️ ver abajo |
 
 ## ⚠️ Alimentación (importante)
@@ -64,8 +65,8 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
    los 360° del dohyo) y recuerda el último lado donde vio al rival durante
    800 ms.
 
-Las **alas** llevan montados los **sensores EM-3 de los extremos** y sirven
-para engañar a los sensores del rival: se recogen al inicio (posición de
+Las **alas** llevan montados los **EM-3 de los extremos**, que son los que
+**buscan al enemigo**: se recogen al inicio (posición de
 medida), se **extienden al recibir la señal de inicio** (en la variante
 `SumoAutonomoAuto`, al encender) y se recogen al terminar el round. Se
 controlan con la librería **Servo** (incluida en el IDE de Arduino) en los

@@ -112,12 +112,19 @@ hace por dentro; solo sigue las instrucciones y anota lo que pide.
 
 ### Test 01 — Motores (`tests/01_test_motores`)
 
-El robot repite: adelante → reversa → giro izquierda → giro derecha → freno.
-El Serial dice qué paso toca en cada momento.
+Prueba **cada motor por separado** y en cada sentido, para saber si un fallo
+es del motor/cableado o del programa. El Serial dice qué paso toca y qué
+valores se mandan a cada pin.
+
+**Secuencia:** izquierdo solo (adelante/atrás) → derecho solo (adelante/atrás)
+→ los dos juntos (adelante/atrás) → giro izquierda → giro derecha → rampa de
+potencia.
 
 **Anota:**
-- ¿Avanza **derecho** o se tuerce? Si se tuerce, ¿cuál rueda va al revés?
-- ¿Los giros son hacia el lado correcto?
+- ¿Cada rueda se mueve **sola** cuando le toca? ¿En el sentido correcto?
+- ¿Avanza **derecho** con las dos juntas, o se tuerce? Si se tuerce, ¿cuál
+  rueda va al revés?
+- ¿A qué `PWM` empieza a moverse cada motor en la rampa?
 
 ### Test 02 — Sensores EM-3 (`tests/02_test_em3`)
 
@@ -172,8 +179,10 @@ DATOS GENERALES
 - Versión del código probado: ______________
 
 TEST 01 — MOTORES
-- Avanza derecho: ( ) sí  ( ) no
+- ¿Cada motor va solo en los dos sentidos?  izq ( ) sí ( ) no   der ( ) sí ( ) no
+- Avanza derecho (los dos juntos): ( ) sí  ( ) no
 - Motor al revés: ( ) izquierdo  ( ) derecho  ( ) ninguno
+- ¿A qué PWM arranca en la rampa?  izq ____   der ____
 - Giros correctos: ( ) sí  ( ) no
 - Observaciones: ______________
 

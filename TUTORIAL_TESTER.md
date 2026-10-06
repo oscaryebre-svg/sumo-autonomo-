@@ -321,8 +321,8 @@ Monitor: **0** buscar, **1** atacar, **2** escapar.
 
 ### 8.5 Las alas
 
-Los 2 servos **no empujan al rival**: llevan montados los **EM-3 de los
-extremos** y sirven para **engañar a los sensores del rival**. Se **recogen**
+Los 2 servos **no empujan al rival**: en las alas van montados los **EM-3 de
+los extremos**, que son los que **buscan al enemigo**. Se **recogen**
 (90°, pegadas al cuerpo) antes de empezar y al terminar el round, y se
 **extienden** (una a 0° y la otra a 180°, 90° cada una) **al recibir la señal
 de inicio** (en la variante auto, **al encender**). Van montadas espejadas.

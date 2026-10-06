@@ -1,7 +1,7 @@
 // ============================================================
 //  alas.h — control de los 2 servos MOT-110 (alas retráctiles)
 //
-//  Las alas SOLO sirven para engañar a los sensores del rival.
+//  En las alas van montados los EM-3 de los extremos, que buscan al enemigo.
 //  Van montadas espejadas (izquierda 90°/0°, derecha 90°/180°) y
 //  tienen dos posiciones:
 //    recogida   -> al inicio (medida) y al terminar el round
@@ -17,7 +17,7 @@
 // Configura los servos y las deja RECOGIDAS (llamar en setup)
 void alas_init();
 
-// Despliega las alas para engañar a los sensores del rival
+// Extiende las alas (y con ellas los sensores que buscan al enemigo)
 void alas_desplegar();
 
 // Vuelve a recogerlas

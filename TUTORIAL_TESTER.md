@@ -144,7 +144,8 @@ Cada sensor tiene un **LED azul** que se enciende al detectar.
 
 ### Test 03 — Sensores de piso Mini QTR (`tests/03_test_qtr`)
 
-Imprime dos números (0–1023): lectura izquierda y derecha del piso.
+Imprime dos números (0–1023): lectura del piso **izquierda (A1)** y
+**derecha (A2)**.
 
 **Pasos:**
 1. Con el robot sobre el piso **negro** del dohyo, anota los dos números.
@@ -314,10 +315,10 @@ Monitor: **0** buscar, **1** atacar, **2** escapar.
   los extremos (ala izquierda A4 y ala derecha D0) van **montados en las
   alas**, así que solo apuntan bien con las alas extendidas; los otros dos
   van junto al centro. Así distingue si el rival está de frente o de lado.
-- **2 sensores de piso (Mini QTR)**, analógicos (0–1023): uno a cada lado.
-  En este robot la **línea blanca** da un valor **menor** que el negro del
-  dohyo (por eso `QTR_BORDE_ES_BLANCO` está en 0). El robot los usa para no
-  salirse. Compruébalo con el test 03.
+- **2 sensores de piso (Mini QTR)**, analógicos (0–1023): uno a cada lado
+  (**A1** izquierda, **A2** derecha). En este robot la **línea blanca** da un
+  valor **menor** que el negro del dohyo (por eso `QTR_BORDE_ES_BLANCO` está
+  en 0). El robot los usa para no salirse. Compruébalo con el test 03.
 
 ### 8.5 Las alas
 

@@ -122,3 +122,21 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 - Ajustar con el test 04 los cuatro ángulos de las alas
   (`ANGULO_IZQ_RECOGIDA/DESPLIEGUE`, `ANGULO_DER_RECOGIDA/DESPLIEGUE`) si la
   mecánica lo pide.
+
+## 8. Variante de autoarranque (SumoAutonomoAuto)
+
+Junto al programa principal hay una variante, `SumoAutonomoAuto`, que arranca
+el round **al encender**, sin esperar la señal del módulo de inicio.
+
+- La lógica es idéntica: la única diferencia es que `arrancado()` devuelve
+  siempre `true` (macro `ARRANQUE_SIN_SENAL`). Al empezar el combate, las alas
+  bajan de inmediato.
+- `SumoAutonomo` y `SumoAutonomoAuto` son **dos sketches independientes**:
+  Arduino copia la carpeta del sketch a un directorio temporal y no permite
+  compartir código entre carpetas, así que `SumoAutonomoAuto/src` es una
+  **copia** de `SumoAutonomo/src`.
+- **Si cambias un módulo**, cópialo también en la otra carpeta para que sigan
+  iguales (o cambia solo el `.ino` si el cambio es únicamente del arranque).
+- Se compila igual que el principal, cambiando la carpeta:
+  `arduino-cli compile --fqbn arduino:avr:leonardo SumoAutonomoAuto/`, y en PC
+  con el comando de `test_ino` apuntando a `SumoAutonomoAuto/`.

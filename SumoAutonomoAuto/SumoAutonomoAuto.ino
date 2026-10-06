@@ -1,13 +1,14 @@
 // ============================================================
-//  SUMO AUTÓNOMO — programa principal
+//  SUMO AUTÓNOMO — variante AUTOARRANQUE
 //
-//  Secuencia del round:
-//    1. Espera la señal de arranque (módulo o START_ACTIVO_BAJO 0).
-//    2. Despliega las alas y pelea hasta TIEMPO_COMBATE_MS.
-//    3. Al terminar: frena y recoge las alas.
+//  Igual que el programa principal (SumoAutonomo), pero arranca solo
+//  al encender: NO espera la señal del módulo de inicio (pin D8).
 //
-//  La variante SumoAutonomoAuto reutiliza este archivo con la macro
-//  ARRANQUE_SIN_SENAL = 1 para arrancar al encender, sin señal.
+//  Al encender empieza el combate y las alas bajan de inmediato;
+//  al terminar el round el robot frena y las recoge.
+//
+//  OJO: esta carpeta es una COPIA de SumoAutonomo. Si cambias algo en
+//  SumoAutonomo, cópialo también aquí para que sigan iguales.
 //
 //  TODOS los ajustes están en src/config.h
 // ============================================================
@@ -17,11 +18,8 @@
 #include "src/alas.h"
 #include "src/estrategia.h"
 
-// Arranque: por defecto espera la señal del módulo de inicio (pin D8).
-// La variante SumoAutonomoAuto define esto a 1 para arrancar al encender.
-#ifndef ARRANQUE_SIN_SENAL
-#define ARRANQUE_SIN_SENAL 0
-#endif
+// Arranque sin señal: empieza en cuanto se enciende.
+#define ARRANQUE_SIN_SENAL 1
 
 static bool     combate         = false;  // ¿hay un round en curso?
 static bool     roundTerminado  = false;  // evita reiniciar sin soltar la señal

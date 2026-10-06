@@ -75,6 +75,9 @@ definidos en `config.h`.
 El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
 robot frena y recoge las alas.
 
+El programa `SumoAutonomo` espera la señal del módulo de arranque; la
+variante `SumoAutonomoAuto` empieza el round en cuanto se enciende.
+
 Los tiempos y velocidades se ajustan en `config.h` sin tocar la lógica.
 
 ## Estructura del proyecto
@@ -84,10 +87,13 @@ sumo autonomo/
 ├── README.md                          ← este resumen
 ├── TUTORIAL_TESTER.md                 ← ★ tutorial y formulario del tester
 ├── DOCUMENTACION_DESARROLLADOR.md     ← guía del desarrollador
-├── SumoAutonomo/
-│   ├── SumoAutonomo.ino               ← programa principal
+├── SumoAutonomo/                      ← programa principal (espera señal)
+│   ├── SumoAutonomo.ino
 │   └── src/                           ← módulos (config, motores, sensores,
 │                                         alas, estrategia)
+├── SumoAutonomoAuto/                  ← variante que arranca al encender
+│   ├── SumoAutonomoAuto.ino
+│   └── src/                           ← copia de SumoAutonomo/src
 ├── simulacion/                        ← simulación 2D (uso: guía desarrollador)
 ├── tests/                             ← 4 sketches de calibración (tester)
 └── tools/                             ← pruebas de lógica en PC (desarrollador)

@@ -44,10 +44,10 @@ simulación 2D para desarrollo sin el robot físico.
 | Motor derecho DIR | D13 | |
 | QTR izquierdo (piso) | A1 | analógico |
 | QTR derecho (piso) | A2 | analógico |
-| EM-3 ala izquierda | A4 | sensor del extremo izquierdo |
+| EM-3 ala izquierda | A4 | sensor montado en el ala izquierda (extremo) |
 | EM-3 central izquierdo | A5 | |
 | EM-3 central derecho | D1 | ⚠️ D0/D1 son el Serial1: no usar Serial1 en el código |
-| EM-3 ala derecha | D0 | sensor del extremo derecho |
+| EM-3 ala derecha | D0 | sensor montado en el ala derecha (extremo) |
 | Servo ala izquierda | D4 | librería Servo |
 | Servo ala derecha | D2 | librería Servo |
 | Módulo de arranque | D8 | `INPUT_PULLUP`, opcional |
@@ -64,13 +64,14 @@ Máquina de estados con prioridades (en cada ciclo del `loop()`):
    los 360° del dohyo) y recuerda el último lado donde vio al rival durante
    800 ms.
 
-Las **alas** solo engañan a los sensores del rival: se recogen al inicio
-(posición de medida), se despliegan una sola vez al arrancar el combate y
-se recogen al terminar el round. Se controlan con la librería **Servo**
-(incluida en el IDE de Arduino) en los pines D4 (izquierda) y D2 (derecha).
-Las dos alas se recogen a 90° y se despliegan 90° en sentidos opuestos
-porque van montadas espejadas (izquierda 90°→0°, derecha 90°→180°),
-definidos en `config.h`.
+Las **alas** llevan montados los **sensores EM-3 de los extremos** y sirven
+para engañar a los sensores del rival: se recogen al inicio (posición de
+medida), se **extienden al recibir la señal de inicio** (en la variante
+`SumoAutonomoAuto`, al encender) y se recogen al terminar el round. Se
+controlan con la librería **Servo** (incluida en el IDE de Arduino) en los
+pines D4 (izquierda) y D2 (derecha). Las dos alas se recogen a 90° y se
+extienden 90° en sentidos opuestos porque van montadas espejadas (izquierda
+90°→0°, derecha 90°→180°), definidos en `config.h`.
 
 El round dura `TIEMPO_COMBATE_MS` (3 min por defecto): al cumplirse, el
 robot frena y recoge las alas.

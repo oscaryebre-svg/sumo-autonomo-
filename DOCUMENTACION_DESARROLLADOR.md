@@ -116,7 +116,8 @@ Rama en GitHub: `oscaryebre-svg/sumo-autonomo-` → rama `programacion-sumo`.
 
 ## 7. Pendientes de datos reales
 
-- Umbral QTR real y alturas de montaje (test 03).
+- Umbral QTR real, `QTR_BORDE_ES_BLANCO` (si el blanco da más o menos valor
+  que el negro) y alturas de montaje (test 03).
 - `PWM_MAX` según la alimentación (buck 12 V = 255; 6S directa = 70).
 - Sentido de giro real de cada motor (test 01).
 - Ajustar con el test 04 los cuatro ángulos de las alas

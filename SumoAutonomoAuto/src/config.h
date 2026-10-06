@@ -52,8 +52,10 @@
 // Umbral del QTR (0..1023) para detectar la línea blanca.
 // Se calibra con tests/03: UMBRAL = (valor_negro + valor_blanco) / 2
 #define UMBRAL_QTR  500
-// 1 = lectura ALTA sobre la línea blanca (lo normal en estos sensores)
-#define QTR_BORDE_ES_BLANCO  1
+// ¿La lectura del QTR es ALTA (1) o BAJA (0) sobre la línea BLANCA?
+//   En el robot probado el blanco da un valor MENOR que el negro -> 0.
+//   Si sobre blanco el valor fuese MAYOR, pon 1. Compruébalo con el test 03.
+#define QTR_BORDE_ES_BLANCO  0
 
 // ===================== ESTRATEGIA =====================
 // Velocidades: van de 0 a PWM_MAX. El signo lo pone la lógica.

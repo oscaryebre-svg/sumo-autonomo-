@@ -69,8 +69,14 @@ repositorio y abrir la carpeta `SumoAutonomo`.
 
 ### 3.2 Subir el programa principal
 
-1. Menú **File → Open** → busca la carpeta `SumoAutonomo` y abre
-   **`SumoAutonomo.ino`** (⚠️ no renombres la carpeta ni el archivo).
+> Hay **dos programas**: `SumoAutonomo` (espera la señal del módulo de
+> arranque) y `SumoAutonomoAuto` (empieza solo al encender, sin módulo).
+> Sube el que te diga el desarrollador; si no hay módulo de arranque, usa
+> **`SumoAutonomoAuto`**.
+
+1. Menú **File → Open** → busca la carpeta del programa elegido
+   (`SumoAutonomo` o `SumoAutonomoAuto`) y abre su `.ino`
+   (⚠️ no renombres la carpeta ni el archivo).
    En Windows la ruta será parecida a
    `Descargas\...\SumoAutonomo\SumoAutonomo.ino`.
 2. Pulsa el botón **Upload (→)** (flecha, arriba a la izquierda).

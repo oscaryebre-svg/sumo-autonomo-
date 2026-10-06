@@ -79,6 +79,8 @@ void loop() {
     if (senal && !roundTerminado) {
       combate = true;         // empieza el round
       tArranque = t;
+      alas_desplegar();       // las alas se extienden al recibir la señal
+      alasDesplegadas = true; // (en la versión auto, esto es al encender)
     }
     return;
   }

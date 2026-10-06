@@ -96,7 +96,7 @@ El robot imprime una línea cada 0,1 s:
 |---|---|
 | `12.3s` | Segundos desde el arranque del combate |
 | `est=` | Estado: **0** buscando · **1** atacando · **2** escapando del borde |
-| `qtr=` | Lectura de los 2 sensores de piso (bajo = negro, alto = blanco) |
+| `qtr=` | Lectura de los 2 sensores de piso (en este robot, **blanco = valor bajo**) |
 | `em3=` | Los 4 sensores de oponente (0 = nada, 1 = rival detectado) |
 | `mot=` | Velocidad pedida a cada motor (positivo = adelante) |
 
@@ -151,6 +151,12 @@ Imprime dos números (0–1023): lectura izquierda y derecha del piso.
 2. Pon los sensores sobre la **línea blanca** y anota los dos números.
 3. Anota la altura del sensor al piso (mm).
 
+**Importante:** fíjate en si el número sobre **blanco** es **mayor o menor**
+que sobre **negro**. Con eso se ajustan en `config.h`
+`UMBRAL_QTR = (negro + blanco) / 2` y `QTR_BORDE_ES_BLANCO` (**1** si el
+blanco da más, **0** si da menos). Si el robot confunde el blanco con el
+negro, hay que cambiar ese valor.
+
 ### Test 04 — Alas (servos MOT-110) (`tests/04_test_alas`)
 
 El **MOT-110** es un servo analógico de 180°. Este test mueve **cada ala por
@@ -196,6 +202,7 @@ TEST 02 — EM-3 (¿responde cada sensor en su columna?)
 TEST 03 — MINI QTR
 - Sobre negro:  izq = ____   der = ____
 - Sobre blanco: izq = ____   der = ____
+- ¿Sobre blanco el valor es mayor o menor que sobre negro? ( ) mayor  ( ) menor
 - Altura del sensor al piso (mm): ____
 
 TEST 04 — ALAS (servo MOT-110, barrido de 0° a 180°)
@@ -303,19 +310,22 @@ Monitor: **0** buscar, **1** atacar, **2** escapar.
 
 ### 8.4 Los sentidos del robot
 
-- **4 sensores de rival (EM-3)**, digitales: `1` = rival delante. Hay dos a
-  los lados (las "alas") y dos junto al centro; así distingue si el rival
-  está de frente o de lado.
+- **4 sensores de rival (EM-3)**, digitales: `1` = rival delante. Los dos de
+  los extremos (ala izquierda A4 y ala derecha D0) van **montados en las
+  alas**, así que solo apuntan bien con las alas extendidas; los otros dos
+  van junto al centro. Así distingue si el rival está de frente o de lado.
 - **2 sensores de piso (Mini QTR)**, analógicos (0–1023): uno a cada lado.
-  Sobre la línea blanca dan un valor alto; sobre el negro del dohyo, bajo.
-  El robot los usa para no salirse.
+  En este robot la **línea blanca** da un valor **menor** que el negro del
+  dohyo (por eso `QTR_BORDE_ES_BLANCO` está en 0). El robot los usa para no
+  salirse. Compruébalo con el test 03.
 
 ### 8.5 Las alas
 
-Los 2 servos **no empujan al rival**: solo sirven para **engañar a sus
-sensores**. Se **recogen** (90°, pegadas al cuerpo) antes de empezar y al
-terminar el round, y se **despliegan** (una a 0° y la otra a 180°, 90° cada
-una) durante el combate. Van montadas espejadas.
+Los 2 servos **no empujan al rival**: llevan montados los **EM-3 de los
+extremos** y sirven para **engañar a los sensores del rival**. Se **recogen**
+(90°, pegadas al cuerpo) antes de empezar y al terminar el round, y se
+**extienden** (una a 0° y la otra a 180°, 90° cada una) **al recibir la señal
+de inicio** (en la variante auto, **al encender**). Van montadas espejadas.
 
 ### 8.6 Dónde se ajusta todo
 

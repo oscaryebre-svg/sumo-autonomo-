@@ -25,8 +25,13 @@ RADIO_PERDIDA = RADIO_DOHYO - DIAMETRO_ROBOT / 2.0
 
 # --- Sensores ---
 ALCANCE_EM3 = 85.0      # cm (alcance real del EM-3)
-QTR_BLANCO = 800        # lectura analógica simulada sobre blanco
-QTR_NEGRO = 300         # lectura analógica simulada sobre negro
+# Lecturas QTR simuladas, coherentes con QTR_BORDE_ES_BLANCO:
+#   flag 1 -> el blanco da mas valor que el negro
+#   flag 0 -> el blanco da menos valor que el negro
+if CONST["QTR_BORDE_ES_BLANCO"] == 1:
+    QTR_BLANCO, QTR_NEGRO = 800, 300
+else:
+    QTR_BLANCO, QTR_NEGRO = 300, 800
 
 
 class Robot:

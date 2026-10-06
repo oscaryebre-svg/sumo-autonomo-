@@ -16,6 +16,16 @@
 #include "sensores.h"
 #include "alas.h"
 
+// Valores de prueba de los QTR coherentes con el flag de config.h:
+// QTR_BORDE_ES_BLANCO = 1 -> el blanco da más valor que el negro; 0 -> menos.
+#if QTR_BORDE_ES_BLANCO
+#define QTR_NEGRO  300   // piso del dohyo (fuera del blanco)
+#define QTR_BLANCO 800   // linea blanca
+#else
+#define QTR_NEGRO  800   // piso del dohyo (fuera del blanco)
+#define QTR_BLANCO 300   // linea blanca
+#endif
+
 static int fallos = 0;
 
 static void comprobar(const char *nombre, bool ok) {
@@ -26,8 +36,8 @@ static void comprobar(const char *nombre, bool ok) {
 int main() {
   LecturaSensores_t s;
   for (int i = 0; i < 4; i++) s.em3[i] = false;
-  s.qtr[0] = 300;   // piso negro (bajo el umbral)
-  s.qtr[1] = 300;
+  s.qtr[0] = QTR_NEGRO;
+  s.qtr[1] = QTR_NEGRO;
   estrategia_reiniciar();
 
   // 1. Sin rival: debe girar (buscar). No hay cuenta regresiva previa.
@@ -52,12 +62,12 @@ int main() {
   s.em3[0] = false;
 
   // 4. Borde: retroceso inmediato.
-  s.qtr[0] = 800;
+  s.qtr[0] = QTR_BLANCO;
   c = estrategia_actualizar(s, 300);
   comprobar("borde: retrocede", c.motorIzq < 0 && c.motorDer < 0);
 
   // 5. La maniobra de borde NO se interrumpe por el rival.
-  s.qtr[0] = 300;
+  s.qtr[0] = QTR_NEGRO;
   s.em3[2] = true;
   c = estrategia_actualizar(s, 400);
   comprobar("borde: no interrumpe por rival", c.motorIzq < 0 && c.motorDer < 0);

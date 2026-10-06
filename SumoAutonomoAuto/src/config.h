@@ -50,11 +50,13 @@
 
 // ===================== SENSORES =====================
 // Umbral del QTR (0..1023) para detectar la línea blanca.
-// Se calibra con tests/03: UMBRAL = (valor_negro + valor_blanco) / 2
-#define UMBRAL_QTR  500
+// Valores medidos en el robot real (test 03):
+//   negro (dohyo): izq 745, der 723
+//   blanco (linea): izq 416, der 41
+// Un solo umbral que separa los cuatro valores (entre 416 y 723) -> 570.
+#define UMBRAL_QTR  570
 // ¿La lectura del QTR es ALTA (1) o BAJA (0) sobre la línea BLANCA?
-//   En el robot probado el blanco da un valor MENOR que el negro -> 0.
-//   Si sobre blanco el valor fuese MAYOR, pon 1. Compruébalo con el test 03.
+//   En este robot el blanco da un valor MENOR que el negro -> 0.
 #define QTR_BORDE_ES_BLANCO  0
 
 // ===================== ESTRATEGIA =====================

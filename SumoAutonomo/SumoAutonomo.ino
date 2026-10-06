@@ -59,9 +59,7 @@ void setup() {
   motores_init();
   sensores_init();
   alas_init();                        // alas recogidas (posición de medida)
-#if !ARRANQUE_SIN_SENAL
-  pinMode(PIN_START, INPUT_PULLUP);
-#endif
+  pinMode(PIN_START, INPUT_PULLUP);   // el pin del módulo queda definido en las dos versiones
   estrategia_reiniciar();
 }
 

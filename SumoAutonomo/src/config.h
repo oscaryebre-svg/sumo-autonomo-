@@ -33,10 +33,9 @@
 #define PIN_ALA_IZQ   4     // D4 = servo izquierdo
 
 // --- Módulo de arranque (opcional) ---
-// Pin donde va conectado el módulo. Comprueba con el test 05 en qué pin
-// responde tu placa: en la XMotion completa el start suele ser D10; en la
-// XMotion Micro, D8/D12.
-#define PIN_START         8
+// Pin del módulo de arranque. En la XMotion (placa completa) es D10, el
+// mismo pin del botón de start. Compruébalo con el test 05.
+#define PIN_START         10    // D10
 
 // Cómo se recibe la señal de arranque. Elige UNA opción:
 //   START_MODO 0 -> SIN MÓDULO: el robot arranca solo al encender.

@@ -182,7 +182,7 @@ recorrido es suave y si van espejadas. Con eso se ajustan los cuatro
 
 Sirve para saber **cómo responde tu módulo de arranque** (el aparato con el
 que dan la salida). Imprime un número cada 0,2 s: el nivel del pin del
-módulo (D8).
+módulo (D10).
 
 **Pasos:**
 1. Sube el test y abre el Monitor Serie a 115200 baud.
@@ -193,7 +193,7 @@ módulo (D8).
 el módulo. Con eso se ajusta en `config.h`:
 - reposo `0` → señal `1` → `START_MODO 2` (módulo JSumo **MicroStart**)
 - reposo `1` → señal `0` → `START_MODO 1` (pulsador con resistencia pull-up)
-- si el número **nunca cambia**, el módulo no está en D8: mira en qué pin va
+- si el número **nunca cambia**, el módulo no está en D10: mira en qué pin va
   conectado y anótalo (se cambia `PIN_START`).
 
 ## 5. Formulario de reporte (cópialo y rellénalo)
@@ -233,7 +233,7 @@ TEST 04 — ALAS (servo MOT-110, barrido de 0° a 180°)
 - ¿Fuerza o zumba en algún extremo? ( ) no ( ) izq en ____° ( ) der en ____°
 - ¿Derecha espejada? ( ) sí  ( ) no
 
-TEST 05 — MÓDULO DE ARRANQUE (pin D8)
+TEST 05 — MÓDULO DE ARRANQUE (pin D10)
 - Valor en reposo (sin señal): ____
 - Valor al dar la señal de start: ____
 - Pin donde va conectado el módulo: ____

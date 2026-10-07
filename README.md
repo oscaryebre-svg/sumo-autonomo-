@@ -43,15 +43,15 @@ físico.
 | Motor izquierdo DIR | D12 | |
 | Motor derecho PWM | D11 | |
 | Motor derecho DIR | D13 | |
-| QTR izquierdo (piso) | A1 | analógico |
-| QTR derecho (piso) | A2 | analógico |
-| EM-3 ala izquierda | A4 | sensor montado en el ala izquierda (extremo) |
-| EM-3 central izquierdo | A5 | |
-| EM-3 central derecho | D1 | ⚠️ D0/D1 son el Serial1: no usar Serial1 en el código |
-| EM-3 ala derecha | D0 | sensor montado en el ala derecha (extremo) |
+| QTR izquierdo (piso) | A1 | analógico; detecta el borde blanco (prioridad máxima) |
+| QTR derecho (piso) | A2 | analógico; detecta el borde blanco (prioridad máxima) |
+| EM-3 ala izquierda | A4 | extremo del ala izquierda · lado IZQUIERDO |
+| EM-3 central izquierdo | A5 | junto al morro, lado izquierdo |
+| EM-3 central derecho | D1 | junto al morro, lado derecho · ⚠️ D0/D1 = Serial1 (Leonardo) / Serial (Nano) |
+| EM-3 ala derecha | D0 | extremo del ala derecha · lado DERECHO |
 | Servo ala izquierda | D4 | librería Servo |
 | Servo ala derecha | D2 | librería Servo |
-| Módulo de arranque | D8 | opcional; polaridad en `START_MODO` (ver test 05) |
+| Módulo de arranque | D10 | opcional; polaridad en `START_MODO` (ver test 05) |
 
 ## Cómo funciona la estrategia
 
@@ -80,7 +80,7 @@ robot frena y recoge las alas.
 El programa `SumoAutonomo` espera la señal del módulo de arranque; la
 variante `SumoAutonomoAuto` empieza el round en cuanto se enciende.
 
-El **módulo de arranque** se conecta a `D8`. Su polaridad se ajusta con
+El **módulo de arranque** se conecta a `D10`. Su polaridad se ajusta con
 `START_MODO` en `config.h`: `2` = activo alto (JSumo MicroStart: en reposo
 da 0 V y al dar la señal 5 V), `1` = activo bajo (pulsador con pull-up),
 `0` = sin módulo (arranca al encender). Se comprueba con el **test 05**.

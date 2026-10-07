@@ -2,7 +2,7 @@
 //  SUMO AUTÓNOMO — variante AUTOARRANQUE
 //
 //  Igual que el programa principal (SumoAutonomo), pero arranca solo
-//  al encender: NO espera la señal del módulo de inicio (pin D8).
+//  al encender: NO espera la señal del módulo de inicio (D10, sin usar aquí).
 //
 //  Al encender empieza el combate y las alas bajan de inmediato;
 //  al terminar el round el robot frena y las recoge.

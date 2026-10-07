@@ -17,7 +17,7 @@
 #include "src/alas.h"
 #include "src/estrategia.h"
 
-// Arranque: por defecto espera la señal del módulo de inicio (pin D8).
+// Arranque: por defecto espera la señal del módulo de inicio (pin D10).
 // La variante SumoAutonomoAuto define esto a 1 para arrancar al encender.
 #ifndef ARRANQUE_SIN_SENAL
 #define ARRANQUE_SIN_SENAL 0

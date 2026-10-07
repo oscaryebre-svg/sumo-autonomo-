@@ -2,7 +2,7 @@
 //  TEST 05 — MÓDULO DE ARRANQUE (polaridad)
 //
 //  Muestra por el Serial el nivel del pin del módulo para saber:
-//   1. En qué pin responde (por defecto se lee D8).
+//   1. En qué pin responde (por defecto se lee D10).
 //   2. Su polaridad: qué valor tiene EN REPOSO y qué valor da AL DAR
 //      la señal de start.
 //
@@ -13,10 +13,10 @@
 //   4. Compara:
 //        reposo 0  ->  señal 1   =>  START_MODO 2  (JSumo MicroStart)
 //        reposo 1  ->  señal 0   =>  START_MODO 1  (pulsador con pull-up)
-//   5. Si el valor no cambia nunca, el módulo no está en D8: prueba el
+//   5. Si el valor no cambia nunca, el módulo no está en D10: prueba el
 //      pin donde vaya conectado y anótalo.
 // ============================================================
-#define PIN_START 8
+#define PIN_START 10
 
 void setup() {
   pinMode(PIN_START, INPUT);

@@ -100,11 +100,13 @@ El robot imprime una línea cada 0,1 s:
 | `em3=` | Los 4 sensores de oponente (0 = nada, 1 = rival detectado) |
 | `mot=` | Velocidad pedida a cada motor (positivo = adelante) |
 
-> Si el robot **no se mueve nunca** y no tienes **módulo de arranque**,
-> es normal: está esperando la señal. Anótalo en el reporte y el
-> desarrollador lo desactiva en un minuto.
+> Si el robot **no se mueve nunca**, casi siempre es el **arranque**:
+> - Si **no tienes módulo**: es normal, espera una señal que no llega. Anótalo
+>   (se cambia a `START_MODO 0`).
+> - Si **tienes módulo**: haz el **test 05** y anota su polaridad (valor en
+>   reposo y con señal); el JSumo MicroStart es `START_MODO 2`.
 
-## 4. Calibrar: los 4 tests
+## 4. Calibrar: los 5 tests
 
 Cada test es un archivo aparte. Se sube igual que el principal
 (**File → Open → el .ino del test → Upload**). No hace falta saber qué
@@ -176,6 +178,24 @@ viene incluida en el IDE: no hay que instalar nada.
 recorrido es suave y si van espejadas. Con eso se ajustan los cuatro
 `ANGULO_IZQ_*` / `ANGULO_DER_*` en `config.h`.
 
+### Test 05 — Módulo de arranque (`tests/05_test_arranque`)
+
+Sirve para saber **cómo responde tu módulo de arranque** (el aparato con el
+que dan la salida). Imprime un número cada 0,2 s: el nivel del pin del
+módulo (D8).
+
+**Pasos:**
+1. Sube el test y abre el Monitor Serie a 115200 baud.
+2. **Sin dar la salida**, anota el número que aparece (el valor en reposo).
+3. Con el mando del árbitro, **da la señal de start** y anota el número nuevo.
+
+**Anota:** los dos valores (reposo y con señal) y en qué pin está conectado
+el módulo. Con eso se ajusta en `config.h`:
+- reposo `0` → señal `1` → `START_MODO 2` (módulo JSumo **MicroStart**)
+- reposo `1` → señal `0` → `START_MODO 1` (pulsador con resistencia pull-up)
+- si el número **nunca cambia**, el módulo no está en D8: mira en qué pin va
+  conectado y anótalo (se cambia `PIN_START`).
+
 ## 5. Formulario de reporte (cópialo y rellénalo)
 
 ```text
@@ -212,6 +232,12 @@ TEST 04 — ALAS (servo MOT-110, barrido de 0° a 180°)
 - Ala DERECHA:   recogida ____° · desplegada ____°
 - ¿Fuerza o zumba en algún extremo? ( ) no ( ) izq en ____° ( ) der en ____°
 - ¿Derecha espejada? ( ) sí  ( ) no
+
+TEST 05 — MÓDULO DE ARRANQUE (pin D8)
+- Valor en reposo (sin señal): ____
+- Valor al dar la señal de start: ____
+- Pin donde va conectado el módulo: ____
+- ¿Cambia el valor al dar la señal? ( ) sí  ( ) no
 
 PROGRAMA PRINCIPAL (con Serial Monitor abierto)
 - Pega 15-20 líneas del Serial en cada situación:
@@ -268,7 +294,7 @@ vale más un video que diez descripciones.
 | `SumoAutonomo/src/sensores.cpp` | Lee los 4 sensores de rival y los 2 del piso. |
 | `SumoAutonomo/src/alas.cpp` | Mueve los 2 servos de las alas. |
 | `SumoAutonomo/src/tipos.h` | Los "sobres" de datos que se pasan los módulos. |
-| `tests/01_test_motores` … `tests/04_test_alas` | Los 4 tests de calibración. |
+| `tests/01_test_motores` … `tests/05_test_arranque` | Los 5 tests de calibración. |
 
 Ninguna carpeta ni archivo debe renombrarse: el IDE de Arduino los busca
 por su nombre.

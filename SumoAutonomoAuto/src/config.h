@@ -33,9 +33,19 @@
 #define PIN_ALA_IZQ   4     // D4 = servo izquierdo
 
 // --- Módulo de arranque (opcional) ---
+// Pin donde va conectado el módulo. Comprueba con el test 05 en qué pin
+// responde tu placa: en la XMotion completa el start suele ser D10; en la
+// XMotion Micro, D8/D12.
 #define PIN_START         8
-#define START_ACTIVO_BAJO 1   // 1 = el módulo da LOW al arrancar (estilo MicroStart)
-                               // 0 = el robot corre al encender si no hay módulo
+
+// Cómo se recibe la señal de arranque. Elige UNA opción:
+//   START_MODO 0 -> SIN MÓDULO: el robot arranca solo al encender.
+//   START_MODO 1 -> módulo ACTIVO BAJO: arranca cuando el pin = LOW
+//                   (pulsador/botón con resistencia de pull-up).
+//   START_MODO 2 -> módulo ACTIVO ALTO: arranca cuando el pin = HIGH.
+//                   Es el caso del JSumo MicroStart: en reposo da 0 V y al
+//                   dar la señal pasa a 5 V (Logic 1) y se mantiene. POR DEFECTO.
+#define START_MODO  2
 
 // ===================== MOTORES =====================
 // PWM máximo: limita el voltaje que reciben los motores de 6 V.

@@ -51,7 +51,7 @@ físico.
 | EM-3 ala derecha | D0 | sensor montado en el ala derecha (extremo) |
 | Servo ala izquierda | D4 | librería Servo |
 | Servo ala derecha | D2 | librería Servo |
-| Módulo de arranque | D8 | `INPUT_PULLUP`, opcional |
+| Módulo de arranque | D8 | opcional; polaridad en `START_MODO` (ver test 05) |
 
 ## Cómo funciona la estrategia
 
@@ -80,6 +80,11 @@ robot frena y recoge las alas.
 El programa `SumoAutonomo` espera la señal del módulo de arranque; la
 variante `SumoAutonomoAuto` empieza el round en cuanto se enciende.
 
+El **módulo de arranque** se conecta a `D8`. Su polaridad se ajusta con
+`START_MODO` en `config.h`: `2` = activo alto (JSumo MicroStart: en reposo
+da 0 V y al dar la señal 5 V), `1` = activo bajo (pulsador con pull-up),
+`0` = sin módulo (arranca al encender). Se comprueba con el **test 05**.
+
 Los tiempos y velocidades se ajustan en `config.h` sin tocar la lógica.
 
 ## Estructura del proyecto
@@ -97,7 +102,7 @@ sumo autonomo/
 │   ├── SumoAutonomoAuto.ino
 │   └── src/                           ← copia de SumoAutonomo/src
 ├── simulacion/                        ← simulación 2D (uso: guía desarrollador)
-├── tests/                             ← 4 sketches de calibración (tester)
+├── tests/                             ← 5 sketches de calibración (tester)
 └── tools/                             ← pruebas de lógica en PC (desarrollador)
 ```
 
@@ -110,5 +115,5 @@ sumo autonomo/
 | No detecta la línea blanca | `UMBRAL_QTR` mal calibrado | Recalibrar con test 03 |
 | Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2) |
 | Las alas fuerzan o zumban en un extremo | Un ángulo de `config.h` pasa del tope mecánico | Ajustar los cuatro `ANGULO_*` con el test 04 |
-| No arranca nunca | Módulo de arranque ausente | Poner `START_ACTIVO_BAJO 0` en config.h |
+| No arranca nunca | Módulo ausente o polaridad mal | `START_MODO 0` (sin módulo) o el valor del **test 05** (`1` activo bajo, `2` MicroStart) |
 | Se calientan los motores | PWM muy alto con 6S directa | Bajar `PWM_MAX` o usar buck de 12 V |

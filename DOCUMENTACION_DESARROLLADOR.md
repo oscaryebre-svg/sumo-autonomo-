@@ -29,6 +29,20 @@ g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock test_servo.cpp \
 ./test_servo               # debe terminar con "RESULTADO: TODAS OK"
 ```
 
+También comprueba el arranque: simula el pin del módulo (`PIN_START`) y
+verifica que el robot no se mueve en reposo y sí arranca con la señal, según
+`START_MODO`:
+
+```bash
+cd "tools"
+g++ -std=c++11 -Wall -I ../SumoAutonomo/src -I mock -x c++ \
+  ../SumoAutonomo/SumoAutonomo.ino test_arranque.cpp \
+  ../SumoAutonomo/src/estrategia.cpp ../SumoAutonomo/src/motores.cpp \
+  ../SumoAutonomo/src/sensores.cpp ../SumoAutonomo/src/alas.cpp \
+  -o test_arranque
+./test_arranque            # debe terminar con "RESULTADO: TODAS OK"
+```
+
 También se puede compilar y ejecutar el `.ino` completo en PC:
 
 ```bash
@@ -83,7 +97,8 @@ librería Servo en D4/D2.
    - Ángulos de las alas → `ANGULO_IZQ_RECOGIDA`, `ANGULO_IZQ_DESPLIEGUE`,
      `ANGULO_DER_RECOGIDA`, `ANGULO_DER_DESPLIEGUE`
    - Duración del round → `TIEMPO_COMBATE_MS`
-   - Sin módulo de arranque → `START_ACTIVO_BAJO 0`
+   - Arranque → `START_MODO`: `2` activo alto (JSumo MicroStart), `1` activo
+     bajo (pulsador con pull-up), `0` sin módulo (arranca al encender)
    - Buck de 12 V → `PWM_MAX 255`; 6S directa → `PWM_MAX 70`
 3. Se recompila, se sube a la rama y el tester repite la prueba.
 4. Las líneas del Serial del robot real se pueden comparar con la traza de

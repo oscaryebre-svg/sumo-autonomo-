@@ -2,7 +2,7 @@
 //  SUMO AUTÓNOMO — programa principal
 //
 //  Secuencia del round:
-//    1. Espera la señal de arranque (módulo o START_ACTIVO_BAJO 0).
+//    1. Espera la señal de arranque (módulo o START_MODO 0).
 //    2. Despliega las alas y pelea hasta TIEMPO_COMBATE_MS.
 //    3. Al terminar: frena y recoge las alas.
 //
@@ -29,14 +29,16 @@ static bool     alasDesplegadas = false;
 static uint32_t tArranque       = 0;      // millis() del inicio del round
 
 // ¿El módulo de arranque ya dio la señal?
+//   ARRANQUE_SIN_SENAL=1 (variante Auto) o START_MODO=0 -> arranca siempre.
+//   START_MODO=2 -> arranca con la señal en ALTO (JSumo MicroStart).
+//   START_MODO=1 -> arranca con la señal en BAJO (pulsador con pull-up).
 static bool arrancado() {
-#if ARRANQUE_SIN_SENAL
-  return true;   // arranca en cuanto se enciende, sin esperar señal
+#if ARRANQUE_SIN_SENAL || (START_MODO == 0)
+  return true;
+#elif START_MODO == 2
+  return digitalRead(PIN_START) == HIGH;
 #else
-  bool nivel = (digitalRead(PIN_START) == HIGH);
-  // START_ACTIVO_BAJO = 1: el módulo da LOW al arrancar; sin módulo espera.
-  // START_ACTIVO_BAJO = 0: corre al encender (sin módulo).
-  return START_ACTIVO_BAJO ? !nivel : nivel;
+  return digitalRead(PIN_START) == LOW;
 #endif
 }
 
@@ -59,7 +61,11 @@ void setup() {
   motores_init();
   sensores_init();
   alas_init();                        // alas recogidas (posición de medida)
-  pinMode(PIN_START, INPUT_PULLUP);   // el pin del módulo queda definido en las dos versiones
+#if START_MODO == 1
+  pinMode(PIN_START, INPUT_PULLUP);   // activo BAJO: resistencia de pull-up
+#elif START_MODO == 2
+  pinMode(PIN_START, INPUT);          // activo ALTO: el módulo maneja la línea
+#endif
   estrategia_reiniciar();
 }
 

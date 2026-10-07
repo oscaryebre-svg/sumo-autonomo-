@@ -5,3 +5,4 @@ simulacion/__pycache__/
 tools/test_estrategia
 tools/test_ino
 tools/test_servo
+tools/test_arranque

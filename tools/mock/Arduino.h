@@ -50,9 +50,18 @@ inline void digitalWrite(uint8_t p, uint8_t v) {
   }
 }
 
-inline int digitalRead(uint8_t) { return 0; }
-inline void analogWrite(uint8_t, int) {}
-inline int analogRead(uint8_t) { return 0; }
+// ---- Entradas digitales controlables desde los tests ----
+// digitalRead() devuelve el nivel guardado con nivelPin() (por defecto 0 = LOW).
+inline int &nivelPin(uint8_t p) { static int v[32] = {0}; return v[p & 31]; }
+inline int digitalRead(uint8_t p) { return nivelPin(p); }
+
+// ---- Salidas PWM registradas (para comprobar los motores) ----
+inline int &pwmPin(uint8_t p) { static int v[32] = {0}; return v[p & 31]; }
+inline void analogWrite(uint8_t p, int v) { pwmPin(p) = v; }
+
+// ---- Entradas analógicas controlables (sensores de piso) ----
+inline int &analogPin(uint8_t p) { static int v[32] = {0}; return v[p & 31]; }
+inline int analogRead(uint8_t p) { return analogPin(p); }
 
 // ---- Serial mínimo (solo para poder compilar el .ino en PC) ----
 class PrintMock {

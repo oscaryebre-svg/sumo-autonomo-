@@ -167,17 +167,6 @@ def torneo(n, graficar=False):
     print(f"  tasa de victoria: {100.0 * victorias / n:.0f}%   "
           f"duracion media: {media:.1f}s")
 
-    ruta = os.path.join(RESULTADOS, "torneo_resumen.csv")
-    os.makedirs(RESULTADOS, exist_ok=True)
-    with open(ruta, "w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        w.writerow(["partida", "resultado", "duracion_s"])
-        for i, (r, d) in enumerate(zip(
-                ["victoria"] * victorias + ["derrota"] * derrotas + ["empate"] * empates,
-                duraciones)):
-            w.writerow([i + 1, r, f"{d:.1f}"])
-    print(f"  resumen={ruta}")
-
 
 def main():
     p = argparse.ArgumentParser(description="Simulación del sumo autónomo")

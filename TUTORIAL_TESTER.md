@@ -164,7 +164,7 @@ negro, hay que cambiar ese valor.
 
 El **MOT-110** es un servo analógico de 180°. Este test mueve **cada ala por
 separado**, despacio, de 0° a 180°, e imprime el ángulo. Están en los pines
-**D2 (izquierda)** y **D4 (derecha)** y usan la librería **Servo**, que ya
+**D4 (izquierda)** y **D2 (derecha)** y usan la librería **Servo**, que ya
 viene incluida en el IDE: no hay que instalar nada.
 
 **Pasos:**

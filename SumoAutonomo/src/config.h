@@ -29,8 +29,8 @@
 
 // --- Servos de las alas (MOT-110) ---
 // Se controlan con la librería Servo (incluida en el IDE de Arduino).
-#define PIN_ALA_IZQ   2     // D2 = servo ala izquierda
-#define PIN_ALA_DER   4     // D4 = servo ala derecha
+#define PIN_ALA_DER   2     // D2 = servo derecho
+#define PIN_ALA_IZQ   4     // D4 = servo izquierdo
 
 // --- Módulo de arranque (opcional) ---
 // Pin del módulo de arranque. En la XMotion (placa completa) es D10, el

@@ -1,5 +1,5 @@
 // ============================================================
-//  TEST 04 — ALAS (servos MOT-110 en D4 izquierda y D2 derecha)
+//  TEST 04 — ALAS (servos MOT-110 en D2 izquierda y D4 derecha)
 //
 //  Mueve las dos alas entre su posición RECOGIDA (90° en las dos) y su
 //  posición DESPLEGADA (izquierda 0°, derecha 180°). Van montadas
@@ -16,8 +16,8 @@
 // ============================================================
 #include <Servo.h>
 
-#define PIN_ALA_IZQ 4
-#define PIN_ALA_DER 2
+#define PIN_ALA_IZQ 2
+#define PIN_ALA_DER 4
 
 // Ángulos del robot: deben coincidir con config.h.
 #define IZQ_RECOGIDA     90

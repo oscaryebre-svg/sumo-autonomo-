@@ -5,13 +5,13 @@
 //  sensor y su LED azul debe encenderse.
 //
 //  Orden de las columnas (según el chasis):
-//    [ala_izq(A4) central_izq(A5) central_der(D1) ala_der(D0)]
+//    [ala_izq(D0) central_izq(D1) central_der(A5) ala_der(A4)]
 //  Confirma que cada sensor responde en SU columna.
 // ============================================================
-#define PIN_EM3_ALA_IZQ      A4
-#define PIN_EM3_CENTRAL_IZQ  A5
-#define PIN_EM3_CENTRAL_DER  1
-#define PIN_EM3_ALA_DER      0
+#define PIN_EM3_ALA_IZQ      0
+#define PIN_EM3_CENTRAL_IZQ  1
+#define PIN_EM3_CENTRAL_DER  A5
+#define PIN_EM3_ALA_DER      A4
 
 void setup() {
   pinMode(PIN_EM3_ALA_IZQ, INPUT);

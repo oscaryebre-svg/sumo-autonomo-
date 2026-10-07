@@ -136,10 +136,10 @@ Cada sensor tiene un **LED azul** que se enciende al detectar.
 **Pasos:**
 1. Pasa la mano a ~20 cm delante de cada sensor, uno por uno, y comprueba
    que se enciende **su** columna:
-   - sensor de ala izquierda (A4) → primera columna
-   - sensor central izquierdo (A5) → segunda columna
-   - sensor central derecho (D1) → tercera columna
-   - sensor de ala derecha (D0) → cuarta columna
+   - sensor de ala izquierda (D0) → primera columna
+   - sensor central izquierdo (D1) → segunda columna
+   - sensor central derecho (A5) → tercera columna
+   - sensor de ala derecha (A4) → cuarta columna
 2. Aléjate despacio y anota a qué distancia deja de detectarte.
 
 **Anota:** que cada sensor responde en su columna y el alcance aproximado.
@@ -164,7 +164,7 @@ negro, hay que cambiar ese valor.
 
 El **MOT-110** es un servo analógico de 180°. Este test mueve **cada ala por
 separado**, despacio, de 0° a 180°, e imprime el ángulo. Están en los pines
-**D4 (izquierda)** y **D2 (derecha)** y usan la librería **Servo**, que ya
+**D2 (izquierda)** y **D4 (derecha)** y usan la librería **Servo**, que ya
 viene incluida en el IDE: no hay que instalar nada.
 
 **Pasos:**
@@ -214,10 +214,10 @@ TEST 01 — MOTORES
 - Observaciones: ______________
 
 TEST 02 — EM-3 (¿responde cada sensor en su columna?)
-- Ala izquierda (A4):     ( ) sí  ( ) no
-- Central izquierdo (A5): ( ) sí  ( ) no
-- Central derecho (D1):   ( ) sí  ( ) no
-- Ala derecha (D0):       ( ) sí  ( ) no
+- Ala izquierda (D0):     ( ) sí  ( ) no
+- Central izquierdo (D1): ( ) sí  ( ) no
+- Central derecho (A5):   ( ) sí  ( ) no
+- Ala derecha (A4):       ( ) sí  ( ) no
 - Alcance aproximado (cm): ____
 
 TEST 03 — MINI QTR
@@ -338,7 +338,7 @@ Monitor: **0** buscar, **1** atacar, **2** escapar.
 ### 8.4 Los sentidos del robot
 
 - **4 sensores de rival (EM-3)**, digitales: `1` = rival delante. Los dos de
-  los extremos (ala izquierda A4 y ala derecha D0) van **montados en las
+  los extremos (ala izquierda D0 y ala derecha A4) van **montados en las
   alas**, así que solo apuntan bien con las alas extendidas; los otros dos
   van junto al centro. Así distingue si el rival está de frente o de lado.
 - **2 sensores de piso (Mini QTR)**, analógicos (0–1023): uno a cada lado

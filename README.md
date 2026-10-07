@@ -45,12 +45,12 @@ físico.
 | Motor derecho DIR | D13 | |
 | QTR izquierdo (piso) | A1 | analógico; detecta el borde blanco (prioridad máxima) |
 | QTR derecho (piso) | A2 | analógico; detecta el borde blanco (prioridad máxima) |
-| EM-3 ala izquierda | A4 | extremo del ala izquierda · lado IZQUIERDO |
-| EM-3 central izquierdo | A5 | junto al morro, lado izquierdo |
-| EM-3 central derecho | D1 | junto al morro, lado derecho · ⚠️ D0/D1 = Serial1 (Leonardo) / Serial (Nano) |
-| EM-3 ala derecha | D0 | extremo del ala derecha · lado DERECHO |
-| Servo ala izquierda | D4 | librería Servo |
-| Servo ala derecha | D2 | librería Servo |
+| EM-3 ala izquierda | D0 | extremo del ala izquierda · lado IZQUIERDO · ⚠️ D0/D1 = Serial1 (Leonardo) / Serial (Nano) |
+| EM-3 central izquierdo | D1 | junto al morro, lado izquierdo |
+| EM-3 central derecho | A5 | junto al morro, lado derecho |
+| EM-3 ala derecha | A4 | extremo del ala derecha · lado DERECHO |
+| Servo ala izquierda | D2 | librería Servo |
+| Servo ala derecha | D4 | librería Servo |
 | Módulo de arranque | D10 | opcional; polaridad en `START_MODO` (ver test 05) |
 
 ## Cómo funciona la estrategia
@@ -70,7 +70,7 @@ Las **alas** llevan montados los **EM-3 de los extremos**, que son los que
 medida), se **extienden al recibir la señal de inicio** (en la variante
 `SumoAutonomoAuto`, al encender) y se recogen al terminar el round. Se
 controlan con la librería **Servo** (incluida en el IDE de Arduino) en los
-pines D4 (izquierda) y D2 (derecha). Las dos alas se recogen a 90° y se
+pines D2 (izquierda) y D4 (derecha). Las dos alas se recogen a 90° y se
 extienden 90° en sentidos opuestos porque van montadas espejadas (izquierda
 90°→0°, derecha 90°→180°), definidos en `config.h`.
 
@@ -113,7 +113,7 @@ sumo autonomo/
 | El robot avanza girando | Un motor va al revés | Cambiar `DIR_ADELANTE_IZQ`/`DIR_ADELANTE_DER` en config.h |
 | Gira al lado contrario en el borde | Igual | Ídem |
 | No detecta la línea blanca | `UMBRAL_QTR` mal calibrado | Recalibrar con test 03 |
-| Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D4/D2) |
+| Las alas no se mueven | Pines o alimentación de los servos | Revisar el test 04 (servos en D2/D4) |
 | Las alas fuerzan o zumban en un extremo | Un ángulo de `config.h` pasa del tope mecánico | Ajustar los cuatro `ANGULO_*` con el test 04 |
 | No arranca nunca | Módulo ausente o polaridad mal | `START_MODO 0` (sin módulo) o el valor del **test 05** (`1` activo bajo, `2` MicroStart) |
 | Se calientan los motores | PWM muy alto con 6S directa | Bajar `PWM_MAX` o usar buck de 12 V |

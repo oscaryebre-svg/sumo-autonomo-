@@ -17,20 +17,20 @@
 #define PIN_MOTOR_DER_DIR   13    // D13
 
 // --- Mini QTR: sensores de piso (ANALÓGICOS, 0..1023) ---
-#define PIN_QTR_IZQ   A1
-#define PIN_QTR_DER   A2
+#define PIN_QTR_IZQ   A1   // A1 = suelo izquierdo
+#define PIN_QTR_DER   A2   // A2 = suelo derecho
 
 // --- EM-3: sensores de oponente (DIGITALES, 1 = rival detectado) ---
 // Nombres según el chasis: "ala" = sensor del extremo, "central" = junto al centro.
-#define PIN_EM3_ALA_IZQ      A4   // sensor de ala izquierda
-#define PIN_EM3_CENTRAL_IZQ  A5   // sensor central izquierdo
-#define PIN_EM3_CENTRAL_DER  1    // D1, central derecho (es TX del Serial1: no usar Serial1)
-#define PIN_EM3_ALA_DER      0    // D0, ala derecha (es RX del Serial1)
+#define PIN_EM3_ALA_IZQ      0    // D0, ala izquierda (es RX del Serial1)
+#define PIN_EM3_CENTRAL_IZQ  1    // D1, central izquierdo (es TX del Serial1: no usar Serial1)
+#define PIN_EM3_CENTRAL_DER  A5   // A5, central derecho
+#define PIN_EM3_ALA_DER      A4   // A4, ala derecha
 
 // --- Servos de las alas (MOT-110) ---
 // Se controlan con la librería Servo (incluida en el IDE de Arduino).
-#define PIN_ALA_DER   2     // D2 = servo derecho
-#define PIN_ALA_IZQ   4     // D4 = servo izquierdo
+#define PIN_ALA_IZQ   2     // D2 = servo ala izquierda
+#define PIN_ALA_DER   4     // D4 = servo ala derecha
 
 // --- Módulo de arranque (opcional) ---
 // Pin del módulo de arranque. En la XMotion (placa completa) es D10, el

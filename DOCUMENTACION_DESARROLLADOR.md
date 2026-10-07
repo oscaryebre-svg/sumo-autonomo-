@@ -84,7 +84,7 @@ arduino-cli compile --fqbn arduino:avr:nano SumoAutonomo/
 Con Arduino IDE 2.x: abrir `SumoAutonomo/SumoAutonomo.ino`, elegir placa y
 compilar. La única librería que se usa es **Servo** (viene incluida en el
 IDE): motores y sensores se manejan con pines directos, y las alas con la
-librería Servo en D4/D2.
+librería Servo en D2/D4.
 
 ## 4. Flujo de trabajo con el tester
 
